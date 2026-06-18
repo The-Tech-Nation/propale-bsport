@@ -19,14 +19,6 @@
   --radius: 0px;
 }
 
-.dark {
-  --color-brutal-bg: #000000;
-  --color-brutal-fg: #ffffff;
-  --color-brutal-accent: #aeee00;
-  --color-brutal-secondary: #ff00ff;
-  --color-brutal-muted: #1a1a1a;
-}
-
 @layer base {
   * {
     border-color: var(--color-brutal-fg);
@@ -53,6 +45,7 @@
 
   html {
     scroll-behavior: smooth;
+    color-scheme: light;
   }
 
   body {
