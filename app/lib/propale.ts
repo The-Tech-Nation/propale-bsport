@@ -98,7 +98,7 @@ export const MODULES_BCD = [
     id: "B",
     name: "Inspiration",
     tagline:
-      "Not pure tech — ideas they can apply to their role and use cases.",
+      "Not pure tech: ideas they can apply to their role and use cases.",
     formats: ["masterclass", "workshop"] as FormatKey[],
     masterclassDesc:
       "Demo of a chosen use case. We show, we inspire.",
@@ -108,9 +108,9 @@ export const MODULES_BCD = [
   },
   {
     id: "C",
-    name: "Claude Chat & Cowork — setup & optimization",
+    name: "Claude Chat & Cowork: setup & optimization",
     tagline:
-      "BSport already has Claude Chat and Cowork. Here we optimize usage — no reinstall.",
+      "BSport already has Claude Chat and Cowork. Here we optimize usage, no reinstall.",
     formats: ["masterclass", "workshop"] as FormatKey[],
     masterclassDesc:
       "Best practices demo: skills, routines, connectors, projects, prompt instructions, automation.",
@@ -125,7 +125,7 @@ export const MODULE_D = {
   id: "D",
   name: "Hackathon facilitators",
   tagline:
-    "BSport runs a hackathon. Our team roams the floor to unblock, help, fix, and guide — live, as it happens.",
+    "BSport runs a hackathon. Our team roams the floor to unblock, help, fix, and guide, live, as it happens.",
   pricePerHourPerTrainer: 350,
   defaultTrainers: 2,
 };
@@ -236,7 +236,7 @@ export function computeQuote(sel: Selection): Quote {
       const s = masterclassSessionsForTeams(teams);
       if (s > 0)
         lines.push({
-          label: `Claude Code — ${opt.title}`,
+          label: `Claude Code: ${opt.title}`,
           detail: `Masterclass 1h × ${s}`,
           sessions: s,
           unitPrice: FORMATS.masterclass.price,
@@ -246,7 +246,7 @@ export function computeQuote(sel: Selection): Quote {
       const s = workshopSessionsForTeams(teams);
       if (s > 0)
         lines.push({
-          label: `Claude Code — ${opt.title}`,
+          label: `Claude Code: ${opt.title}`,
           detail: `Workshop 1h30 × ${s}`,
           sessions: s,
           unitPrice: FORMATS.workshop.price,
@@ -264,7 +264,7 @@ export function computeQuote(sel: Selection): Quote {
       const s = masterclassSessionsForTeams(mcTeams);
       if (s > 0)
         lines.push({
-          label: `Module ${m.id} — ${m.name}`,
+          label: `Module ${m.id}: ${m.name}`,
           detail: `Masterclass 1h × ${s}`,
           sessions: s,
           unitPrice: FORMATS.masterclass.price,
@@ -277,7 +277,7 @@ export function computeQuote(sel: Selection): Quote {
       const s = workshopSessionsForTeams(wsTeams);
       if (s > 0)
         lines.push({
-          label: `Module ${m.id} — ${m.name}`,
+          label: `Module ${m.id}: ${m.name}`,
           detail: `Workshop 1h30 × ${s}`,
           sessions: s,
           unitPrice: FORMATS.workshop.price,

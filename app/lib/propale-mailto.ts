@@ -56,20 +56,20 @@ export function buildPropaleEmailBody(sel: Selection = initialSelection): string
 
   if (!hasPropaleSelection(sel)) {
     lines.push(
-      "(No selections configured in the calculator — please reach out so we can define the program.)",
+      "(No selections configured in the calculator. Please reach out so we can define the program.)",
       "",
       "Best regards,",
     );
     return lines.join("\n");
   }
 
-  lines.push("--- MODULE A — CLAUDE CODE ---");
+  lines.push("--- MODULE A: CLAUDE CODE ---");
   if (sel.moduleA.options.length > 0) {
     for (const key of sel.moduleA.options) {
       const opt = MODULE_A_OPTIONS.find((o) => o.key === key);
       const teams = sel.moduleA.teamsByOption[key] ?? [];
       lines.push(
-        `Option ${key} — ${opt?.title ?? key}: ${teamLabels(teams)}`,
+        `Option ${key}: ${opt?.title ?? key}: ${teamLabels(teams)}`,
       );
     }
   } else {
@@ -79,7 +79,7 @@ export function buildPropaleEmailBody(sel: Selection = initialSelection): string
 
   for (const m of MODULES_BCD) {
     const pick = sel.modulesBC[m.id];
-    lines.push(`--- MODULE ${m.id} — ${m.name.toUpperCase()} ---`);
+    lines.push(`--- MODULE ${m.id}: ${m.name.toUpperCase()} ---`);
     if (pick?.enabled) {
       for (const format of ["masterclass", "workshop"] as FormatKey[]) {
         const teams = pick.teamsByFormat[format] ?? [];
@@ -97,7 +97,7 @@ export function buildPropaleEmailBody(sel: Selection = initialSelection): string
     lines.push("");
   }
 
-  lines.push(`--- MODULE D — ${MODULE_D.name.toUpperCase()} ---`);
+  lines.push(`--- MODULE D: ${MODULE_D.name.toUpperCase()} ---`);
   if (sel.moduleD.enabled) {
     lines.push(`Hours: ${sel.moduleD.hours}h`);
     lines.push(
@@ -114,7 +114,7 @@ export function buildPropaleEmailBody(sel: Selection = initialSelection): string
 
   lines.push("--- PRICE SUMMARY (EXCL. TAX) ---");
   if (quote.lines.length === 0) {
-    lines.push("No line items — complete team selections per module.");
+    lines.push("No line items. Complete team selections per module.");
   } else {
     for (const line of quote.lines) {
       lines.push(`• ${line.label}`);

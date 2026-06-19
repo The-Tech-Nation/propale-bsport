@@ -131,7 +131,7 @@ function TeamChecks({
       checked={selected.includes(t.id)}
       onChange={() => onToggle(t.id)}
       disabled={disabled}
-      label={`${prefix} — ${t.label}`}
+      label={`${prefix}: ${t.label}`}
     />
   ));
 }
@@ -195,7 +195,7 @@ export function CalculatorSheet() {
 
   const optionLineTotal = (title: string) =>
     quote.lines
-      .filter((l) => l.label === `Claude Code — ${title}`)
+      .filter((l) => l.label === `Claude Code: ${title}`)
       .reduce((s, l) => s + l.total, 0);
 
   const moduleBCFormatTotal = (
@@ -208,7 +208,7 @@ export function CalculatorSheet() {
     return quote.lines
       .filter(
         (l) =>
-          l.label === `Module ${moduleId} — ${moduleName}` &&
+          l.label === `Module ${moduleId}: ${moduleName}` &&
           l.detail.startsWith(detailPrefix),
       )
       .reduce((s, l) => s + l.total, 0);
@@ -244,12 +244,12 @@ export function CalculatorSheet() {
         </AmountCell>
       </SheetRow>
 
-      {/* Module A — section label */}
+      {/* Module A section label */}
       <div className="border-b-4 border-brutal-fg bg-brutal-muted px-4 py-3 font-sans font-black uppercase tracking-tight">
         A · Claude Code
       </div>
 
-      {/* Module A — options */}
+      {/* Module A options */}
       {MODULE_A_OPTIONS.map((opt) => {
         const on = sel.moduleA.options.includes(opt.key);
         const isMc = opt.format === "masterclass";
@@ -288,7 +288,7 @@ export function CalculatorSheet() {
               prefix={`Option ${opt.key}`}
             />
             <AmountCell>
-              {optionTotal > 0 ? `${formatEuro(optionTotal)}€` : "—"}
+              {optionTotal > 0 ? `${formatEuro(optionTotal)}€` : "-"}
             </AmountCell>
           </SheetRow>
         );
@@ -309,7 +309,7 @@ export function CalculatorSheet() {
       {MODULES_BCD.map((m) => {
         const pick = sel.modulesBC[m.id];
         const moduleTotal = quote.lines
-          .filter((l) => l.label === `Module ${m.id} — ${m.name}`)
+          .filter((l) => l.label === `Module ${m.id}: ${m.name}`)
           .reduce((s, l) => s + l.total, 0);
 
         return (
@@ -362,7 +362,7 @@ export function CalculatorSheet() {
                     prefix={`${m.id} ${fmt.label}`}
                   />
                   <AmountCell>
-                    {formatTotal > 0 ? `${formatEuro(formatTotal)}€` : "—"}
+                    {formatTotal > 0 ? `${formatEuro(formatTotal)}€` : "-"}
                   </AmountCell>
                 </SheetRow>
               );
@@ -429,7 +429,7 @@ export function CalculatorSheet() {
         </LabelCell>
         <div className="col-span-5 border-l-4 border-brutal-fg" />
         <AmountCell>
-          {moduleDTotal > 0 ? `${formatEuro(moduleDTotal)}€` : "—"}
+          {moduleDTotal > 0 ? `${formatEuro(moduleDTotal)}€` : "-"}
         </AmountCell>
       </SheetRow>
 

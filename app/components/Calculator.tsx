@@ -1,7 +1,7 @@
 "use client";
 
 import { animate, utils } from "animejs";
-import { ArrowRight, Check, ChevronDown, Clock, Minus, Plus, Users, X } from "lucide-react";
+import { Check, ChevronDown, Clock, Minus, Plus, Users, X } from "lucide-react";
 import {
   type MouseEvent,
   type ReactNode,
@@ -411,7 +411,7 @@ export function Calculator() {
 
   return (
     <div className="grid grid-cols-1 desktop:grid-cols-[5fr_7fr] desktop:items-stretch gap-0 border-4 border-brutal-fg shadow-hard-xl">
-      {/* SUMMARY — sticky */}
+      {/* SUMMARY sticky */}
       <aside className="sticky top-0 desktop:top-8 z-30 self-start desktop:self-stretch desktop:flex desktop:flex-col w-full bg-brutal-fg text-brutal-bg border-b-4 desktop:border-b-0 desktop:border-r-4 border-brutal-fg overflow-hidden">
         <div
           ref={summaryRailRef}
@@ -589,7 +589,7 @@ export function Calculator() {
           <CardHeader
             index="Module A"
             title="Claude Code"
-            tagline="Claude Code isn't a tool for shipping hosted apps. It's a personal assistant: connect everyday tools (email, etc.), build a second brain, automate workflows — especially the sales process."
+            tagline="Claude Code isn't a tool for shipping hosted apps. It's a personal assistant: connect everyday tools (email, etc.), build a second brain, automate workflows, especially the sales process."
           />
           <div className="p-6 md:p-8 flex flex-col gap-6">
             <div>
@@ -601,7 +601,7 @@ export function Calculator() {
                 <span className="font-sans font-black uppercase">masterclass</span>{" "}
                 only (1h). Options 2 and 3 are{" "}
                 <span className="font-sans font-black uppercase">workshops</span>{" "}
-                only (1h30) — format doesn't change.
+                only (1h30). Format doesn't change.
               </p>
               <div className="flex flex-row border-t-4 border-l-4 border-brutal-fg">
                 {MODULE_A_OPTIONS.map((opt) => {
@@ -676,7 +676,7 @@ export function Calculator() {
                 return (
                   <div key={opt.key}>
                     <div className="font-mono text-xs uppercase tracking-[3px] text-brutal-subtle mb-3">
-                      Teams — option {opt.key}
+                      Teams, option {opt.key}
                     </div>
                     <TeamGrid
                       selected={sel.moduleA.teamsByOption[opt.key] ?? []}
@@ -898,14 +898,13 @@ export function CTAButton({
       href={mailtoHref}
       onClick={handleClick}
       className={cn(
-        "inline-flex items-center justify-center gap-3 font-sans font-black uppercase tracking-wider transition-all duration-200",
+        "inline-flex items-center justify-center font-sans font-black uppercase tracking-wider text-sm border-2 transition-colors",
         variant === "aside"
-          ? "w-full bg-brutal-accent text-brutal-fg border-4 border-brutal-accent px-6 py-5 text-base md:text-lg shadow-[4px_4px_0px_0px_#ff00ff] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#ff00ff]"
-          : "bg-brutal-fg text-brutal-secondary border-4 border-brutal-secondary px-8 py-4 text-lg shadow-[4px_4px_0px_0px_#ff00ff] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_#ff00ff]",
+          ? "w-full border-brutal-bg text-brutal-bg px-4 py-2.5 hover:bg-brutal-bg hover:text-brutal-fg"
+          : "border-brutal-fg text-brutal-fg px-4 py-2.5 hover:bg-brutal-fg hover:text-brutal-bg",
       )}
     >
       {children}
-      <ArrowRight size={variant === "aside" ? 22 : 20} />
     </a>
   );
 }

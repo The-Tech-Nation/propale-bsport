@@ -16,7 +16,7 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Proposal — Claude Training for BSport",
+  title: "Proposal: Claude Training for BSport",
   description:
     "In-person sessions, à la carte. Pick your modules, formats, and teams. The price updates automatically.",
 };
