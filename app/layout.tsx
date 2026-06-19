@@ -16,9 +16,9 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Proposition — Formation Claude pour BSport",
+  title: "Proposal — Claude Training for BSport",
   description:
-    "Sessions en présentiel, à la carte. Vous cochez les modules, les formats et les équipes. Le prix se calcule tout seul.",
+    "In-person sessions, à la carte. Pick your modules, formats, and teams. The price updates automatically.",
 };
 
 export default function RootLayout({
@@ -26,7 +26,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang="fr"
+      lang="en"
       className={`${spaceGrotesk.variable} ${dmMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

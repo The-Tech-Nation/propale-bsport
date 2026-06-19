@@ -1,248 +1,248 @@
-# BSport — Proposition commerciale : document de copywriting
+# BSport — Commercial proposal: copywriting document
 
-> Source unique et définitive pour le one-pager. Tout le contenu ci-dessous est issu de la réunion Manar × Jérémie du 18 juin 2026. Aucune information inventée.
-> Tone : factuel, transparent, droit au but. BSport est une boîte de sales, agressive, culture ESN. Ils veulent du court, du dynamique, du condensé. Zéro blague, zéro jargon tendance.
-
----
-
-## 0. Cadre (interne — ne pas afficher tel quel sur le one-pager)
-
-- **Client** : BSport (bsport.io). Boîte de ~120–150 personnes, culture sales/ESN, direct au but.
-- **Contexte** : ils ont déjà Claude Chat et Claude Cowork installés. Ce qui est à vendre = installation Claude Code + montée en compétence + inspiration + intervenants hackathon.
-- **Verrou CTO** : le CTO est sceptique sur Claude Code (il pense « app à héberger »). Claude Code doit être marketé comme **personal assistant**, pas comme outil de dev. On insiste sur : brancher mail, second brain, automatiser le process de vente.
-- **Format** : 100 % en présentiel chez eux. Pas d'option visio (ouverte une fenêtre de nego relou + workshop en visio = inexistant).
-- **Dates cibles** : 29 juin, 30 juin, ou 3 juillet. **Jamais le 2 juillet** (conflit avec un événement interne).
-- **Équipe d'intervention** :
-  - Masterclass : 2 formateurs — Jérémie (CEO) + Manar (CTO).
-  - Workshop : 4 formateurs — Jérémie (CEO) + Manar (CTO) + 2 membres de l'équipe The Tech Nation (dont l'un largement inclus en bonus).
-- **Nego attendue** : ils vont négocier. Les prix laissent une marge. Si jamais ils veulent baisser, on peut passer le workshop à 3 formateurs (moins de suivi par personne, moins optimum).
+> Single source of truth for the one-pager. All content below comes from the Manar × Jérémie meeting on June 18, 2026. Nothing invented.
+> Tone: factual, transparent, straight to the point. BSport is a sales-driven company, aggressive, ESN culture. They want short, dynamic, condensed copy. No jokes, no trendy jargon.
 
 ---
 
-## 1. Titre / accroche
+## 0. Context (internal — do not display as-is on the one-pager)
 
-> Pas d'accroche marketing. Un titre clair qui dit ce que c'est.
-
-**Proposition — Formation Claude pour BSport**
-
-Sous-titre :
-> Sessions en présentiel, à la carte. Vous cochez les modules, les formats et les équipes. Le prix se calcule tout seul.
-
----
-
-## 2. Intro (2–3 lignes max)
-
-> On pose le cadre. Pas de promesse creuse.
-
-Texte :
-> The Tech Nation propose à BSport un programme de formation à Claude, en présentiel, sur 3 jours possibles (29 juin, 30 juin, 3 juillet). Le programme est modulaire : vous choisissez les modules, le format (masterclass ou workshop) et les équipes concernées. Ce document sert de calculette — le total se met à jour au fur et à mesure de vos sélections.
+- **Client**: BSport (bsport.io). ~120–150 people, sales/ESN culture, direct.
+- **Context**: they already have Claude Chat and Claude Cowork installed. What we're selling = Claude Code rollout + upskilling + inspiration + hackathon facilitators.
+- **CTO blocker**: the CTO is skeptical about Claude Code (thinks "app to host"). Claude Code must be marketed as a **personal assistant**, not a dev tool. Emphasize: connect email, second brain, automate the sales process.
+- **Format**: 100% in person at their office. No remote option (opens a painful negotiation window + remote workshop doesn't exist).
+- **Target dates**: June 29, June 30, or July 3. **Never July 2** (conflict with an internal event).
+- **Delivery team**:
+  - Masterclass: 2 trainers — Jérémie (CEO) + Manar (CTO).
+  - Workshop: 4 trainers — Jérémie (CEO) + Manar (CTO) + 2 The Tech Nation team members (one largely included as a bonus).
+- **Expected negotiation**: they will negotiate. Prices leave room. If they want to go lower, we can drop the workshop to 3 trainers (less support per person, less optimal).
 
 ---
 
-## 3. Les deux formats
+## 1. Title / hook
 
-> Deux formats, une grille de différenciation claire. Pas d'option visio.
+> No marketing hook. A clear title that says what it is.
+
+**Proposal — Claude Training for BSport**
+
+Subtitle:
+> In-person sessions, à la carte. Pick your modules, formats, and teams. The price updates automatically.
+
+---
+
+## 2. Intro (2–3 lines max)
+
+> Set the frame. No empty promises.
+
+Copy:
+> The Tech Nation offers BSport a Claude training program, in person, over 3 possible days (June 29, June 30, July 3). The program is modular: you choose the modules, format (masterclass or workshop), and teams involved. This document works as a calculator — the total updates as you make selections.
+
+---
+
+## 3. The two formats
+
+> Two formats, a clear differentiation grid. No remote option.
 
 ### Masterclass
-- **Jusqu'à 100 personnes**
-- **Durée : 1 h**
-- **2 formateurs** (Jérémie + Manar)
-- **Peu d'interactivité** : on présente, on installe, on démontre. Pas de suivi personnalisé possible à cette échelle.
-- **Prix : 1 200 € HT / session**
+- **Up to 100 people**
+- **Duration: 1 h**
+- **2 trainers** (Jérémie + Manar)
+- **Limited interactivity**: we present, install, and demo. No personalized follow-up at this scale.
+- **Price: €1,200 excl. tax / session**
 
 ### Workshop
-- **Jusqu'à 25 personnes**
-- **Durée : 1 h30**
-- **4 formateurs** (Jérémie, Manar + 2 membres de l'équipe)
-- **Interactif** : assistance personnalisée, questions.
-- **Prix : 2 200 € HT / session**
+- **Up to 25 people**
+- **Duration: 1 h30**
+- **4 trainers** (Jérémie, Manar + 2 team members)
+- **Interactive**: hands-on support, Q&A.
+- **Price: €2,200 excl. tax / session**
 
-Note implicite (à afficher en petite mention sous le workshop) :
-> Au-delà de 25 personnes en workshop, le groupe est divisé en deux sessions.
+Implicit note (show as a small line under workshop):
+> Beyond 25 people in a workshop, the group is split into two sessions.
 
 ---
 
-## 4. Les modules
+## 4. The modules
 
-> Trois modules thématiques + un module hackathon. À l'intérieur du module Claude Code, 3 options mutuellement exclusives (on en choisit une, éventuellement 2 + 3 ensemble).
+> Three thematic modules + one hackathon module. Inside the Claude Code module, 3 options (pick one, or optionally 2 + 3 together).
 
 ---
 
 ### Module A — Claude Code
 
-> Note de positionnement (important pour le CTO) :
-> Claude Code n'est pas présenté comme un outil pour builder des apps à héberger. C'est un **personal assistant** : on branche les outils du quotidien (mail, etc.), on crée un second brain, on automatise des process — notamment le process de vente.
+> Positioning note (important for the CTO):
+> Claude Code is not presented as a tool for shipping hosted apps. It's a **personal assistant**: connect everyday tools (email, etc.), build a second brain, automate workflows — especially the sales process.
 
-**3 options. Vous en choisissez une. Vous pouvez aussi prendre Option 2 + Option 3 ensemble.**
+**3 options. Pick one. You can also take Option 2 + Option 3 together.**
 
 #### Option 1 — Intro & Installation Claude Code
-- **Pour qui** : tout le monde.
-- **Durée** : 1 h.
-- **Format** : masterclass.
-- **Déroulé** : Présentation (5 min) → Possibilités (10 min) → Setup / installation (45 min).
-- **Ce qu'on couvre** : ce qu'est Claude Code, ce que ça peut faire, et installation en live pour chaque participant.
+- **For**: everyone.
+- **Duration**: 1 h.
+- **Format**: masterclass.
+- **Flow**: Overview (5 min) → Capabilities (10 min) → Setup / installation (45 min).
+- **What we cover**: what Claude Code is, what it can do, live installation for every participant.
 
 #### Option 2 — Claude Code + Augmented Sales
-- **Pour qui** : les équipes sales.
-- **Durée** : 1 h30.
-- **Format** : workshop.
-- **Déroulé** : Intro & installation + setup + fonctionnalités Augmented Sales.
-- **Ce qu'on couvre** : installation, puis comment brancher les outils, automatiser le process de vente, augmenter la productivité commerciale.
+- **For**: sales teams.
+- **Duration**: 1 h30.
+- **Format**: workshop.
+- **Flow**: Intro & install + setup + Augmented Sales features.
+- **What we cover**: installation, then how to connect tools, automate the sales process, boost commercial productivity.
 
 #### Option 3 — Claude Code + My Personal Assistant
-- **Pour qui** : tout le monde.
-- **Durée** : 1 h30.
-- **Format** : workshop.
-- **Déroulé** : Intro & installation + setup + personal assistant / second brain.
-- **Ce qu'on couvre** : installation, puis comment brancher le mail et les outils, créer un second brain, commencer à automatiser son process de vente / son quotidien.
+- **For**: everyone.
+- **Duration**: 1 h30.
+- **Format**: workshop.
+- **Flow**: Intro & install + setup + personal assistant / second brain.
+- **What we cover**: installation, then how to connect email and tools, build a second brain, start automating your sales process / daily workflow.
 
 ---
 
 ### Module B — Inspiration
 
-> Pas « créatif » : c'est de l'inspiration sur leur métier et leurs use cases.
+> Not "creative" — inspiration on their role and use cases.
 
-- **Pour qui** : tout le monde / au choix.
-- **Format masterclass** : démonstration d'un use case choisi. On montre, on inspire.
-- **Format workshop** : sessions interactives. On creuse leurs cas concrets, on ouvre des pistes sur leur métier.
-- **Ce qu'on couvre** : inspiration sur leurs use cases et leur business. Pas du technique pur — des idées applicables.
-
----
-
-### Module C — Claude Chat & Claude Cowork : setup & optimisation de la pratique
-
-> BSport a déjà Claude Chat et Cowork. Ici on optimise l'usage, on ne réinstalle pas.
-
-- **Pour qui** : tout le monde / au choix.
-- **Format masterclass ou workshop.**
-- **Ce qu'on couvre** :
-  - Skills, routines, connecteurs natifs, projets.
-  - Instruction de prompt : comment prompter (contexte, simplification, etc.).
-  - Automatisation.
-- **Valeur** : c'est le module qui peut le plus transformer l'usage quotidien des équipes déjà équipées.
+- **For**: everyone / as needed.
+- **Masterclass format**: demo of a chosen use case. We show, we inspire.
+- **Workshop format**: interactive sessions. We dig into their real cases, open paths for their business.
+- **What we cover**: inspiration on their use cases and business. Not pure tech — applicable ideas.
 
 ---
 
-### Module D — Intervenants hackathon
+### Module C — Claude Chat & Claude Cowork: setup & practice optimization
 
-> BSport organise un hackathon. Notre équipe circule parmi les participants pendant l'événement pour débloquer, aider, corriger, orienter — en direct, au fil de l'eau.
+> BSport already has Claude Chat and Cowork. Here we optimize usage — no reinstall.
 
-- **Principe** : BSport organise un hackathon. Notre équipe circule parmi les participants pendant l'événement pour débloquer, aider, corriger, orienter — en direct, au fil de l'eau.
-- **Format** : à l'heure, par formateur présent.
-- **Prix** : 300 € HT / heure / formateur.
-- **Équipe** : Jérémie (CEO) + Manar (CTO) + autres membres de The Tech Nation selon le besoin.
+- **For**: everyone / as needed.
+- **Masterclass or workshop format.**
+- **What we cover**:
+  - Skills, routines, native connectors, projects.
+  - Prompt instructions: how to prompt (context, simplification, etc.).
+  - Automation.
+- **Value**: the module that can most transform daily usage for teams already equipped.
 
 ---
 
-## 5. Les équipes
+### Module D — Hackathon facilitators
 
-> BSport nous a déjà découpé ses équipes. On les reprend telles quelles. L'utilisateur coche les équipes sur lesquelles il veut déployer chaque module. En workshop, les groupes de +25 sont automatiquement divisés en deux.
+> BSport runs a hackathon. Our team roams among participants during the event to unblock, help, fix, and guide — live, as it happens.
 
-| Groupe | Effectif | Note |
+- **Principle**: BSport runs a hackathon. Our team roams among participants during the event to unblock, help, fix, and guide — live, as it happens.
+- **Format**: hourly, per trainer on site.
+- **Price**: €300 excl. tax / hour / trainer.
+- **Team**: Jérémie (CEO) + Manar (CTO) + other The Tech Nation members as needed.
+
+---
+
+## 5. The teams
+
+> BSport already split their teams for us. We use them as-is. The user checks the teams they want each module deployed to. In workshops, groups over 25 are automatically split in two.
+
+| Group | Headcount | Note |
 | --- | --- | --- |
-| **Sales A** | 25 | moitié des 50 Sales |
-| **Sales B** | 25 | moitié des 50 Sales |
-| **CSM A** | 25 | moitié des 50 Customer Success |
-| **CSM B** | 25 | moitié des 50 Customer Success |
-| **G&A** | 15 | fonctions support |
+| **Sales A** | 25 | half of 50 Sales |
+| **Sales B** | 25 | half of 50 Sales |
+| **CSM A** | 25 | half of 50 Customer Success |
+| **CSM B** | 25 | half of 50 Customer Success |
+| **G&A** | 15 | support functions |
 
-**Total concerné** : 115 personnes (50 Sales + 50 CSM + 15 G&A).
+**Total covered**: 115 people (50 Sales + 50 CSM + 15 G&A).
 
-> Pour un workshop sur l'ensemble des 50 Sales, BSport sélectionne Sales A **et** Sales B → 2 sessions de workshop. Idem pour les CSM.
+> For a workshop covering all 50 Sales, BSport selects Sales A **and** Sales B → 2 workshop sessions. Same for CSM.
 
 ---
 
-## 6. La calculette (logique interactive)
+## 6. The calculator (interactive logic)
 
-> C'est le cœur du one-pager. L'utilisateur construit son programme et le prix se met à jour.
+> This is the heart of the one-pager. The user builds their program and the price updates.
 
-### Comment ça marche (côté utilisateur)
+### How it works (user side)
 
-1. Pour chaque module (A, B, C), il choisit un **format** : masterclass ou workshop (ou rien s'il ne veut pas ce module).
-   - Pour le module A (Claude Code), il choisit d'abord l'**option** (1, 2, 3, ou 2+3).
-2. Pour chaque module sélectionné, il **coche les équipes** concernées.
-3. Le système calcule automatiquement le **nombre de sessions** et le **total**.
+1. For each module (A, B, C), they pick a **format**: masterclass or workshop (or skip if they don't want that module).
+   - For module A (Claude Code), they first pick the **option** (1, 2, 3, or 2+3).
+2. For each selected module, they **check the teams** involved.
+3. The system automatically calculates **session count** and **total**.
 
-### Règles de calcul
+### Calculation rules
 
-- **Masterclass** : 1 session par module par équipe cochée → non, une masterclass peut absorber jusqu'à 100 personnes en une fois. Donc 1 masterclass = 1 session pour l'ensemble des équipes cochées (tant qu'on reste ≤ 100).
-  - Exemple : Sales A + Sales B + G&A en masterclass = 1 session (65 personnes ≤ 100).
-  - Exemple : tout le monde (115) en masterclass = 2 sessions (découpage à 100).
-- **Workshop** : 1 session par groupe de 25. Donc :
-  - Sales A cochée = 1 session.
+- **Masterclass**: 1 session per module per checked team → no, a masterclass can absorb up to 100 people at once. So 1 masterclass = 1 session for all checked teams (as long as ≤ 100).
+  - Example: Sales A + Sales B + G&A in masterclass = 1 session (65 people ≤ 100).
+  - Example: everyone (115) in masterclass = 2 sessions (split at 100).
+- **Workshop**: 1 session per group of 25. So:
+  - Sales A checked = 1 session.
   - Sales A + Sales B = 2 sessions.
   - CSM A + CSM B = 2 sessions.
   - G&A = 1 session (15 ≤ 25).
-- **Module A, Option 1** (installation, 1 h) : masterclass uniquement → 1 session jusqu'à 100 personnes.
-- **Module A, Options 2 & 3** : workshop 1h30 → découpé par groupes de 25.
+- **Module A, Option 1** (installation, 1 h): masterclass only → 1 session up to 100 people.
+- **Module A, Options 2 & 3**: 1h30 workshop → split by groups of 25.
 
-### Prix unitaires (HT)
+### Unit prices (excl. tax)
 
-| Élément | Prix |
+| Item | Price |
 | --- | --- |
-| Masterclass (1 h, 2 formateurs) | **1 200 € HT** |
-| Workshop (1 h30, 4 formateurs) | **2 200 € HT** |
-| Intervenants hackathon (par heure / formateur) | **300 € HT** |
+| Masterclass (1 h, 2 trainers) | **€1,200 excl. tax** |
+| Workshop (1 h30, 4 trainers) | **€2,200 excl. tax** |
+| Hackathon facilitators (per hour / trainer) | **€300 excl. tax** |
 
-### Exemples de scénarios (indicatifs)
+### Scenario examples (indicative)
 
-> À intégrer comme exemples visuels, pas comme forfaits imposés.
+> Use as visual examples, not imposed packages.
 
-**Scénario « Sales focus »**
-- Module A, Option 2 (Augmented Sales) en workshop → Sales A + Sales B = 2 workshops.
-- Total : 2 × 2 200 = **4 400 € HT**.
+**"Sales focus" scenario**
+- Module A, Option 2 (Augmented Sales) in workshop → Sales A + Sales B = 2 workshops.
+- Total: 2 × 2,200 = **€4,400 excl. tax**.
 
-**Scénario « Full Claude Code »**
-- Module A, Option 3 (Personal Assistant) en workshop pour tout le monde.
+**"Full Claude Code" scenario**
+- Module A, Option 3 (Personal Assistant) in workshop for everyone.
 - = Sales A + Sales B + CSM A + CSM B + G&A = 5 workshops.
-- Total : 5 × 2 200 = **11 000 € HT**.
+- Total: 5 × 2,200 = **€11,000 excl. tax**.
 
-**Scénario « Installation rapide pour tous »**
-- Module A, Option 1 (Installation) en masterclass, tout le monde (115) = 2 masterclasses.
-- Total : 2 × 1 200 = **2 400 € HT**.
+**"Quick install for everyone" scenario**
+- Module A, Option 1 (Installation) in masterclass, everyone (115) = 2 masterclasses.
+- Total: 2 × 1,200 = **€2,400 excl. tax**.
 
-**Scénario « Complet » (tout, tout le monde)**
-- Installation masterclass : 2 × 1 200 = 2 400.
-- + un module workshop pour les 5 groupes : 5 × 2 200 = 11 000.
-- ≈ **13 000 € HT** pour former l'ensemble des équipes sur une semaine.
+**"Complete" scenario (everything, everyone)**
+- Installation masterclass: 2 × 1,200 = 2,400.
+- + one workshop module for all 5 groups: 5 × 2,200 = 11,000.
+- ≈ **€13,000 excl. tax** to train all teams in one week.
 
-> Note interne : Jérémie estime qu'un budget autour de 9 000–11 000 € pour la complète est réaliste et « change la vie » pour The Tech Nation tout en restant une goutte d'eau pour une boîte de cette taille. Ils vont négocier — les prix laissent la marge pour ça.
-
----
-
-## 7. Sélection des dates
-
-> Case à cocher / champ en fin de page. L'utilisateur indique ses créneaux préférés.
-
-Texte :
-> Indiquez vos créneaux préférés parmi :
-> - 29 juin
-> - 30 juin
-> - 3 juillet
+> Internal note: Jérémie estimates a budget around €9,000–11,000 for the full package is realistic and "life-changing" for The Tech Nation while still a drop in the bucket for a company this size. They will negotiate — prices leave room for that.
 
 ---
 
-## 8. Qui intervient
+## 7. Date selection
 
-> Court, factuel. On nomme Jérémie et Manar. Le reste = « équipe The Tech Nation ».
+> Checkbox / field at the end of the page. The user indicates preferred slots.
 
-Texte :
-> **Masterclasses** : animées par Jérémie (CEO) et Manar (CTO).
-> **Workshops** : animés par Jérémie, Manar + 2 membres de l'équipe The Tech Nation.
-> **Intervenants hackathon** : Jérémie (CEO), Manar (CTO) et autres membres de The Tech Nation selon le sujet.
-
----
-
-## 9. Pied de page / CTA
-
-> Pas de CTA agressif. Une invitation claire à répondre.
-
-Texte :
-> Cochez vos sélections ci-dessus et envoyez-nous le document téléchargeable. On confirmera les dates et l'agenda ensemble.
+Copy:
+> Indicate your preferred slots among:
+> - June 29
+> - June 30
+> - July 3
 
 ---
 
-## 10. Récap données structurées (pour l'implémentation)
+## 8. Who's leading
+
+> Short, factual. We name Jérémie and Manar. The rest = "The Tech Nation team".
+
+Copy:
+> **Masterclasses**: led by Jérémie (CEO) and Manar (CTO).
+> **Workshops**: led by Jérémie, Manar + 2 The Tech Nation team members.
+> **Hackathon facilitators**: Jérémie (CEO), Manar (CTO), and other The Tech Nation members depending on the topic.
+
+---
+
+## 9. Footer / CTA
+
+> No aggressive CTA. A clear invitation to reply.
+
+Copy:
+> Check your selections above and send us the downloadable document. We'll confirm dates and agenda together.
+
+---
+
+## 10. Structured data recap (for implementation)
 
 ### Formats
 ```
@@ -260,20 +260,20 @@ A_claude_code:
 
 B_inspiration:
   formats: ["masterclass", "workshop"]
-  content: "Inspiration sur use cases et métier"
+  content: "Inspiration on use cases and business"
 
 C_chat_cowork:
   formats: ["masterclass", "workshop"]
-  content: "Skills, routines, connecteurs, projets, prompt instruction, automatisation"
-  note: "Optimisation de la pratique — installation déjà faite chez BSport"
+  content: "Skills, routines, connectors, projects, prompt instruction, automation"
+  note: "Practice optimization — already installed at BSport"
 
 D_intervenants_hackathon:
-  type: "hackathon — intervenants mobiles en circulation parmi les participants"
-  price: 300  // € HT / heure / formateur présent
-  team: "Jérémie (CEO) + Manar (CTO) + équipe The Tech Nation (couverture créatif + Claude)"
+  type: "hackathon — mobile facilitators circulating among participants"
+  price: 300  // € excl. tax / hour / trainer on site
+  team: "Jérémie (CEO) + Manar (CTO) + The Tech Nation team (creative + Claude coverage)"
 ```
 
-### Équipes
+### Teams
 ```
 sales_a:  { count: 25 }
 sales_b:  { count: 25 }
@@ -282,31 +282,31 @@ csm_b:    { count: 25 }
 g_and_a:  { count: 15 }
 ```
 
-### Dates disponibles
+### Available dates
 ```
 2026-06-29
 2026-06-30
-2026-07-03   // jamais 2026-07-02
+2026-07-03   // never 2026-07-02
 ```
 
-### Logique de calcul du nombre de sessions
+### Session count calculation logic
 ```
 masterclass: ceil(totalParticipants / 100)
 workshop:    sum over selected teams of ceil(team.count / 25)
-// G&A (15) en workshop = 1 session
-// Sales A (25) en workshop = 1 session
-// Tout le monde en workshop = 5 sessions
+// G&A (15) in workshop = 1 session
+// Sales A (25) in workshop = 1 session
+// Everyone in workshop = 5 sessions
 total = sessions_masterclass * 1200 + sessions_workshop * 2200 + hackathon_hours * 300 * trainers_present
 ```
 
 ---
 
-## 11. Points à ne PAS faire
+## 11. What NOT to do
 
-- Pas d'option visio.
-- Pas de mention du 2 juillet.
-- Pas de jargon / copywriting tendance.
-- Pas de promesse chiffrée de ROI ou de « gains de productivité ».
-- Ne pas nommer d'autres clients ou d'autres intervenants que Jérémie et Manar.
-- Ne pas présenter Claude Code comme un outil de développement d'applications.
-- Ne pas vendre le module Claude Code en 3 sessions cumulatives (1 + 2 + 3) — c'est des options, on en prend une, ou 2 + 3.
+- No remote option.
+- No mention of July 2.
+- No jargon / trendy copywriting.
+- No quantified ROI or "productivity gains" promises.
+- Don't name other clients or trainers besides Jérémie and Manar.
+- Don't present Claude Code as an application development tool.
+- Don't sell the Claude Code module as 3 cumulative sessions (1 + 2 + 3) — these are options, pick one, or 2 + 3.

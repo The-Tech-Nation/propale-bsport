@@ -5,7 +5,8 @@ import {
   MODULE_A_OPTIONS,
   MODULE_D,
   MODULES_BCD,
-  type ModuleAOption,
+  moduleBCHasTeamSelection,
+  type FormatKey,
   type Selection,
   type TeamId,
   TEAMS,
@@ -15,34 +16,30 @@ import { loadSelection } from "./propale-selection";
 
 export const PROPALE_CONTACT_EMAIL = "jeremie@the-tech-nation.com";
 
-const PROPALE_EMAIL_SUBJECT = "Proposition Claude - BSport";
+const PROPALE_EMAIL_SUBJECT = "Claude Training Proposal - BSport";
 
 function teamLabels(ids: TeamId[]): string {
-  if (ids.length === 0) return "Aucune";
+  if (ids.length === 0) return "None";
   return ids
     .map((id) => TEAMS.find((t) => t.id === id)?.label ?? id)
     .join(", ");
 }
 
 function dateLabels(ids: string[]): string {
-  if (ids.length === 0) return "Non renseignées";
+  if (ids.length === 0) return "Not specified";
   return ids
     .map((id) => DATES.find((d) => d.id === id)?.label ?? id)
     .join(", ");
 }
 
-function moduleATitle(option: ModuleAOption | null): string {
-  if (!option) return "Aucune";
-  if (option === "2+3") return "Augmented Sales + Personal Assistant";
-  return MODULE_A_OPTIONS.find((o) => o.key === option)?.title ?? option;
-}
 
 export function hasPropaleSelection(sel: Selection): boolean {
-  const hasModuleA =
-    sel.moduleA.option !== null && sel.moduleA.teams.length > 0;
+  const hasModuleA = sel.moduleA.options.some(
+    (option) => (sel.moduleA.teamsByOption[option]?.length ?? 0) > 0,
+  );
   const hasModulesBC = MODULES_BCD.some((m) => {
     const pick = sel.modulesBC[m.id];
-    return pick?.enabled && pick.teams.length > 0;
+    return pick?.enabled && moduleBCHasTeamSelection(pick);
   });
   const hasModuleD = sel.moduleD.enabled && sel.moduleD.hours > 0;
   return hasModuleA || hasModulesBC || hasModuleD || sel.dates.length > 0;
@@ -51,27 +48,32 @@ export function hasPropaleSelection(sel: Selection): boolean {
 export function buildPropaleEmailBody(sel: Selection = initialSelection): string {
   const quote = computeQuote(sel);
   const lines: string[] = [
-    "Bonjour,",
+    "Hello,",
     "",
-    "Voici ma proposition personnalisée pour la formation Claude chez BSport :",
+    "Here is my customized proposal for Claude training at BSport:",
     "",
   ];
 
   if (!hasPropaleSelection(sel)) {
     lines.push(
-      "(Aucune sélection configurée dans le calculateur — merci de me recontacter pour définir le programme.)",
+      "(No selections configured in the calculator — please reach out so we can define the program.)",
       "",
-      "Cordialement,",
+      "Best regards,",
     );
     return lines.join("\n");
   }
 
   lines.push("--- MODULE A — CLAUDE CODE ---");
-  if (sel.moduleA.option) {
-    lines.push(`Option : ${moduleATitle(sel.moduleA.option)}`);
-    lines.push(`Équipes : ${teamLabels(sel.moduleA.teams)}`);
+  if (sel.moduleA.options.length > 0) {
+    for (const key of sel.moduleA.options) {
+      const opt = MODULE_A_OPTIONS.find((o) => o.key === key);
+      const teams = sel.moduleA.teamsByOption[key] ?? [];
+      lines.push(
+        `Option ${key} — ${opt?.title ?? key}: ${teamLabels(teams)}`,
+      );
+    }
   } else {
-    lines.push("Non sélectionné");
+    lines.push("Not selected");
   }
   lines.push("");
 
@@ -79,34 +81,40 @@ export function buildPropaleEmailBody(sel: Selection = initialSelection): string
     const pick = sel.modulesBC[m.id];
     lines.push(`--- MODULE ${m.id} — ${m.name.toUpperCase()} ---`);
     if (pick?.enabled) {
-      lines.push(
-        `Format : ${pick.format === "masterclass" ? "Masterclass" : "Workshop"}`,
-      );
-      lines.push(`Équipes : ${teamLabels(pick.teams)}`);
+      for (const format of ["masterclass", "workshop"] as FormatKey[]) {
+        const teams = pick.teamsByFormat[format] ?? [];
+        if (teams.length === 0) continue;
+        lines.push(
+          `${format === "masterclass" ? "Masterclass" : "Workshop"}: ${teamLabels(teams)}`,
+        );
+      }
+      if (!moduleBCHasTeamSelection(pick)) {
+        lines.push("No teams selected");
+      }
     } else {
-      lines.push("Non inclus");
+      lines.push("Not included");
     }
     lines.push("");
   }
 
   lines.push(`--- MODULE D — ${MODULE_D.name.toUpperCase()} ---`);
   if (sel.moduleD.enabled) {
-    lines.push(`Heures : ${sel.moduleD.hours}h`);
+    lines.push(`Hours: ${sel.moduleD.hours}h`);
     lines.push(
-      `Formateurs : ${sel.moduleD.trainers} (${MODULE_D.pricePerHourPerTrainer}€ HT / h / formateur)`,
+      `Trainers: ${sel.moduleD.trainers} (${formatEuro(MODULE_D.pricePerHourPerTrainer)}€ excl. tax / h / trainer)`,
     );
   } else {
-    lines.push("Non inclus");
+    lines.push("Not included");
   }
   lines.push("");
 
-  lines.push("--- DATES SOUHAITÉES ---");
+  lines.push("--- PREFERRED DATES ---");
   lines.push(dateLabels(sel.dates));
   lines.push("");
 
-  lines.push("--- RÉCAPITULATIF PRIX (HT) ---");
+  lines.push("--- PRICE SUMMARY (EXCL. TAX) ---");
   if (quote.lines.length === 0) {
-    lines.push("Aucune ligne tarifaire — complétez les équipes par module.");
+    lines.push("No line items — complete team selections per module.");
   } else {
     for (const line of quote.lines) {
       lines.push(`• ${line.label}`);
@@ -114,15 +122,15 @@ export function buildPropaleEmailBody(sel: Selection = initialSelection): string
     }
   }
   lines.push("");
-  lines.push(`Personnes couvertes : ${quote.peopleCovered}`);
-  lines.push(`Sessions : ${quote.sessionsCount}`);
-  lines.push(`TOTAL HT : ${formatEuro(quote.total)} €`);
+  lines.push(`People covered: ${quote.peopleCovered}`);
+  lines.push(`Sessions: ${quote.sessionsCount}`);
+  lines.push(`TOTAL EXCL. TAX: ${formatEuro(quote.total)} €`);
   lines.push("");
   lines.push(
-    "Prix indicatifs, hors taxes. En présentiel chez BSport.",
+    "Indicative prices, excl. tax. In person at BSport.",
   );
   lines.push("");
-  lines.push("Cordialement,");
+  lines.push("Best regards,");
 
   return lines.join("\n");
 }

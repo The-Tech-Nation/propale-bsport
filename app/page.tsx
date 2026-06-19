@@ -8,12 +8,12 @@ import {
 } from "animejs";
 import { ArrowDown } from "lucide-react";
 import { useEffect, useRef } from "react";
-import { Calculator, CTAButton } from "./components/Calculator";
-import { PROPALE_CONTACT_EMAIL } from "./lib/propale-mailto";
+import { CalculatorSheet } from "./components/CalculatorSheet";
 import { Reveal } from "./components/Reveal";
 import {
+  DATES,
   FORMATS,
-  MODULE_A_OPTIONS,
+  formatEuro,
   MODULE_D,
   MODULES_BCD,
   TEAMS,
@@ -22,43 +22,6 @@ import {
 
 const cn = (...c: (string | false | undefined | null)[]) =>
   c.filter(Boolean).join(" ");
-
-function Marquee() {
-  const items = [
-    "PRÉSENTIEL",
-    "À LA CARTE",
-    "VOUS COCHEZ",
-    "LE PRIX SE CALCULE",
-    "CLAUDE CODE",
-    "SALES AUGMENTED",
-    "PERSONAL ASSISTANT",
-    "INSPIRATION",
-    "CHAT & COWORK",
-    "HACKATHON",
-  ];
-  const row = [...items, ...items].map((text, i) => ({
-    text,
-    id: `${text}-${i}`,
-  }));
-  return (
-    <div className="border-y-4 border-brutal-fg bg-brutal-fg text-brutal-bg overflow-hidden">
-      <div
-        className="flex whitespace-nowrap py-3"
-        style={{ animation: "marquee 30s linear infinite" }}
-      >
-        {row.map((item) => (
-          <span
-            key={item.id}
-            className="font-sans font-black uppercase tracking-tight text-xl px-6 flex items-center gap-6"
-          >
-            {item.text}
-            <span className="text-brutal-accent">◆</span>
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 function Hero() {
   const ref = useRef<HTMLDivElement>(null);
@@ -79,12 +42,6 @@ function Hero() {
       delay: animeStagger(120, { start: 200 }),
     });
 
-    const grid = el.querySelector<HTMLElement>("[data-grid]");
-    if (grid) {
-      utils.set(grid, { opacity: 0 });
-      tl.add(grid, { opacity: [0, 1], duration: 1200 }, "-=600");
-    }
-
     const scrollCue = el.querySelector<HTMLElement>("[data-cue]");
     if (scrollCue) {
       utils.set(scrollCue, { opacity: 0, translateY: -10 });
@@ -102,41 +59,29 @@ function Hero() {
 
   return (
     <section className="relative overflow-hidden border-b-4 border-brutal-fg">
-      <div
-        data-grid
-        aria-hidden
-        className="pointer-events-none absolute inset-0"
-        style={{
-          backgroundImage:
-            "linear-gradient(var(--color-brutal-fg) 1px, transparent 1px), linear-gradient(90deg, var(--color-brutal-fg) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-          opacity: 0.06,
-          animation: "gridPulse 6s ease-in-out infinite",
-        }}
-      />
       <div className="relative px-6 md:px-10 lg:px-16 pt-16 md:pt-24 lg:pt-28 pb-20 md:pb-28">
         <div ref={ref} className="max-w-6xl">
           <div
             data-hero
-            className="font-mono text-xs uppercase tracking-[4px] text-brutal-fg/60 mb-6"
+            className="font-mono text-xs uppercase tracking-[4px] text-brutal-subtle mb-6"
           >
-            The Tech Nation × BSport · 29 juin / 30 juin / 3 juillet
+            The Tech Nation × BSport · {DATES.map((d) => d.label).join(" / ")}
           </div>
           <h1
             data-hero
             className="font-sans font-black uppercase tracking-tighter text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl leading-[0.82]"
           >
-            Proposition
+            Proposal
             <br />
-            <span className="text-outline">Formation</span>{" "}
+            <span className="text-outline">Training</span>{" "}
             <span className="text-brutal-secondary">Claude</span>
           </h1>
           <p
             data-hero
-            className="mt-8 font-mono text-lg md:text-xl lg:text-2xl max-w-3xl text-brutal-fg/80 leading-relaxed"
+            className="mt-8 font-mono text-lg md:text-xl lg:text-2xl max-w-3xl text-brutal-soft leading-relaxed"
           >
-            Sessions en présentiel, à la carte. Vous cochez les modules, les
-            formats et les équipes. Le prix se calcule tout seul.
+            In-person sessions, à la carte. Pick your modules, formats, and
+            teams. The price updates automatically.
           </p>
           <div data-hero className="mt-10 flex flex-wrap gap-3">
             {[
@@ -160,9 +105,9 @@ function Hero() {
         <a
           data-cue
           href="#calc"
-          className="mt-16 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[3px] text-brutal-fg/60 hover:text-brutal-secondary transition-colors"
+          className="mt-16 inline-flex items-center gap-2 font-mono text-xs uppercase tracking-[3px] text-brutal-subtle hover:text-brutal-secondary transition-colors"
         >
-          Construire la propale
+          Build the proposal
           <ArrowDown size={16} />
         </a>
       </div>
@@ -174,25 +119,25 @@ function HowItWorks() {
   const steps = [
     {
       n: "01",
-      t: "Choisir les modules",
-      d: "Claude Code, Inspiration, Chat & Cowork, Intervenants hackathon. Vous prenez ce qui sert.",
+      t: "Pick your modules",
+      d: "Claude Code, Inspiration, Chat & Cowork, Hackathon facilitators. Take what you need.",
     },
     {
       n: "02",
-      t: "Choisir format + équipes",
-      d: "Masterclass jusqu'à 100 personnes, ou workshop jusqu'à 25. Vous cochez les équipes.",
+      t: "Pick format + teams",
+      d: `Masterclass up to ${FORMATS.masterclass.capacity} people, or workshop up to ${FORMATS.workshop.capacity}. Check the teams you want.`,
     },
     {
       n: "03",
-      t: "Le prix se calcule",
-      d: "Le total se met à jour automatiquement, HT. Dates à la fin.",
+      t: "Price updates live",
+      d: "The total updates automatically, excl. tax. Pick dates at the end.",
     },
   ];
   return (
     <Reveal childSelector="[data-step]" className="border-b-4 border-brutal-fg">
       <div className="px-6 md:px-10 lg:px-16 py-16 md:py-24">
         <h2 className="font-sans font-black uppercase tracking-tighter text-4xl md:text-5xl lg:text-6xl mb-10">
-          Comment ça marche
+          How it works
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 border-4 border-brutal-fg">
           {steps.map((s, i) => (
@@ -211,7 +156,7 @@ function HowItWorks() {
               <h3 className="mt-4 font-sans font-black uppercase tracking-tight text-xl md:text-2xl">
                 {s.t}
               </h3>
-              <p className="mt-3 font-mono text-sm text-brutal-fg/70 leading-relaxed">
+              <p className="mt-3 font-mono text-sm text-brutal-soft leading-relaxed">
                 {s.d}
               </p>
             </div>
@@ -228,18 +173,18 @@ function Formats() {
       key: "masterclass" as const,
       ...FORMATS.masterclass,
       points: [
-        "On présente, on installe, on démontre",
-        "Peu d'interactivité à cette échelle",
-        "Idéal pour installer Claude Code sur un grand groupe en 1h",
+        "We present, install, and demo",
+        "Limited interactivity at this scale",
+        "Ideal for rolling out Claude Code to a large group in 1h",
       ],
     },
     {
       key: "workshop" as const,
       ...FORMATS.workshop,
       points: [
-        "Assistance personnalisée, questions",
-        "4 formateurs présents",
-        "Au-delà de 25 personnes, le groupe est divisé en plusieurs sessions",
+        "Hands-on support and Q&A",
+        "4 trainers on site",
+        "Beyond 25 people, the group is split into multiple sessions",
       ],
     },
   ];
@@ -247,19 +192,21 @@ function Formats() {
     <Reveal childSelector="[data-fmt]" className="border-b-4 border-brutal-fg">
       <div className="px-6 md:px-10 lg:px-16 py-16 md:py-24">
         <h2 className="font-sans font-black uppercase tracking-tighter text-4xl md:text-5xl lg:text-6xl mb-3">
-          Les deux formats
+          The two formats
         </h2>
-        <p className="font-mono text-base md:text-lg text-brutal-fg/70 max-w-2xl mb-10">
-          En présentiel chez BSport. Pas d'option visio.
+        <p className="font-mono text-base md:text-lg text-brutal-soft max-w-2xl mb-10">
+          In person at BSport. No remote option.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {cards.map((c) => (
+          {cards.map((c) => {
+            const isDark = c.key === "workshop";
+            return (
             <div
               data-fmt
               key={c.key}
               className={cn(
                 "border-4 border-brutal-fg shadow-hard-lg p-8 flex flex-col",
-                c.key === "workshop" && "bg-brutal-fg text-brutal-bg",
+                isDark && "bg-brutal-fg text-brutal-bg",
               )}
             >
               <div className="flex items-baseline justify-between gap-4 border-b-4 border-current pb-4 mb-6">
@@ -267,29 +214,44 @@ function Formats() {
                   {c.label}
                 </h3>
                 <span className="font-sans font-black text-2xl md:text-3xl text-brutal-secondary">
-                  {c.price}€
+                  {formatEuro(c.price)}€
                 </span>
               </div>
               <div className="grid grid-cols-3 gap-4 mb-6">
                 <div>
-                  <div className="font-mono text-[11px] uppercase tracking-wider opacity-60">
-                    Capacité
+                  <div
+                    className={cn(
+                      "font-mono text-[11px] uppercase tracking-wider",
+                      isDark ? "text-brutal-on-dark-muted" : "text-brutal-subtle",
+                    )}
+                  >
+                    Capacity
                   </div>
                   <div className="font-sans font-black text-2xl md:text-3xl">
                     {c.capacity}
                   </div>
                 </div>
                 <div>
-                  <div className="font-mono text-[11px] uppercase tracking-wider opacity-60">
-                    Durée
+                  <div
+                    className={cn(
+                      "font-mono text-[11px] uppercase tracking-wider",
+                      isDark ? "text-brutal-on-dark-muted" : "text-brutal-subtle",
+                    )}
+                  >
+                    Duration
                   </div>
                   <div className="font-sans font-black text-2xl md:text-3xl">
                     {c.duration}
                   </div>
                 </div>
                 <div>
-                  <div className="font-mono text-[11px] uppercase tracking-wider opacity-60">
-                    Formateurs
+                  <div
+                    className={cn(
+                      "font-mono text-[11px] uppercase tracking-wider",
+                      isDark ? "text-brutal-on-dark-muted" : "text-brutal-subtle",
+                    )}
+                  >
+                    Trainers
                   </div>
                   <div className="font-sans font-black text-2xl md:text-3xl">
                     {c.trainers}
@@ -300,15 +262,25 @@ function Formats() {
                 {c.points.map((p) => (
                   <li key={p} className="flex gap-2">
                     <span className="text-brutal-accent">▸</span>
-                    <span className="opacity-90">{p}</span>
+                    <span
+                      className={isDark ? "text-brutal-on-dark-subtle" : "text-brutal-soft"}
+                    >
+                      {p}
+                    </span>
                   </li>
                 ))}
               </ul>
-              <div className="mt-6 font-mono text-xs uppercase tracking-wider opacity-60">
-                {c.price}€ HT / session
+              <div
+                className={cn(
+                  "mt-6 font-mono text-xs uppercase tracking-wider",
+                  isDark ? "text-brutal-on-dark-muted" : "text-brutal-subtle",
+                )}
+              >
+                {formatEuro(c.price)}€ excl. tax / session
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
       </div>
     </Reveal>
@@ -321,10 +293,8 @@ function ModulesOverview() {
       id: "A",
       title: "Claude Code",
       tagline:
-        "Personal assistant : on branche les outils (mail, etc.), on crée un second brain, on automatise le process de vente. Pas un outil pour builder des apps à héberger.",
-      sub: MODULE_A_OPTIONS.map((o) => `Option ${o.key} · ${o.title}`).join(
-        " / ",
-      ),
+        "Personal assistant: connect your tools (email, etc.), build a second brain, automate the sales process. Not a tool for shipping hosted apps.",
+      sub: "Option 1 · Masterclass 1h / Options 2 & 3 · Workshops 1h30",
     },
     ...MODULES_BCD.map((m) => ({
       id: m.id,
@@ -336,7 +306,7 @@ function ModulesOverview() {
       id: "D",
       title: MODULE_D.name,
       tagline: MODULE_D.tagline,
-      sub: `${MODULE_D.pricePerHourPerTrainer}€ HT / heure / formateur`,
+      sub: `${formatEuro(MODULE_D.pricePerHourPerTrainer)}€ excl. tax / hour / trainer`,
     },
   ];
   return (
@@ -346,10 +316,10 @@ function ModulesOverview() {
     >
       <div className="px-6 md:px-10 lg:px-16 py-16 md:py-24">
         <h2 className="font-sans font-black uppercase tracking-tighter text-4xl md:text-5xl lg:text-6xl mb-3">
-          Les modules
+          The modules
         </h2>
-        <p className="font-mono text-base md:text-lg text-brutal-fg/70 max-w-2xl mb-10">
-          Quatre modules. Vous les retrouvez dans la calculette plus bas.
+        <p className="font-mono text-base md:text-lg text-brutal-soft max-w-2xl mb-10">
+          Four modules. Find them in the calculator below.
         </p>
         <div className="flex flex-col">
           {all.map((m) => (
@@ -365,10 +335,10 @@ function ModulesOverview() {
                 {m.title}
               </h3>
               <div>
-                <p className="font-mono text-sm md:text-base text-brutal-fg/80 leading-relaxed">
+                <p className="font-mono text-sm md:text-base text-brutal-soft leading-relaxed">
                   {m.tagline}
                 </p>
-                <p className="mt-2 font-mono text-xs uppercase tracking-wider text-brutal-fg/50">
+                <p className="mt-2 font-mono text-xs uppercase tracking-wider text-brutal-faint">
                   {m.sub}
                 </p>
               </div>
@@ -385,11 +355,11 @@ function TeamsSection() {
     <Reveal childSelector="[data-row]" className="border-b-4 border-brutal-fg">
       <div className="px-6 md:px-10 lg:px-16 py-16 md:py-24">
         <h2 className="font-sans font-black uppercase tracking-tighter text-4xl md:text-5xl lg:text-6xl mb-3">
-          Les équipes
+          The teams
         </h2>
-        <p className="font-mono text-base md:text-lg text-brutal-fg/70 max-w-2xl mb-10">
-          {TOTAL_PEOPLE} personnes au total. En workshop, les groupes de plus de
-          25 sont divisés en plusieurs sessions.
+        <p className="font-mono text-base md:text-lg text-brutal-soft max-w-2xl mb-10">
+          {TOTAL_PEOPLE} people total. In workshops, groups over 25 are split
+          into multiple sessions.
         </p>
         <div className="border-4 border-brutal-fg">
           {TEAMS.map((t, i) => (
@@ -404,11 +374,11 @@ function TeamsSection() {
               <div className="font-sans font-black uppercase tracking-tight text-2xl md:text-3xl">
                 {t.label}
               </div>
-              <div className="font-mono text-xs uppercase tracking-wider text-brutal-fg/60 hidden sm:block">
+              <div className="font-mono text-xs uppercase tracking-wider text-brutal-subtle hidden sm:block">
                 {t.note}
               </div>
               <div className="ml-auto font-sans font-black text-3xl md:text-4xl text-brutal-secondary">
-                {t.count}
+                {t.count} people
               </div>
             </div>
           ))}
@@ -423,21 +393,21 @@ function WhoIntervenes() {
     <Reveal className="border-b-4 border-brutal-fg bg-brutal-fg text-brutal-bg">
       <div className="px-6 md:px-10 lg:px-16 py-16 md:py-24">
         <h2 className="font-sans font-black uppercase tracking-tighter text-4xl md:text-5xl lg:text-6xl mb-10 text-brutal-bg">
-          Qui intervient
+          Who's leading
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
             {
               t: "Masterclasses",
-              d: "Animées par Jérémie (CEO) et Manar (CTO).",
+              d: "Led by Jérémie (CEO) and Manar (CTO).",
             },
             {
               t: "Workshops",
-              d: "Animés par Jérémie, Manar + 2 membres de l'équipe The Tech Nation.",
+              d: "Led by Jérémie, Manar + 2 members of The Tech Nation team.",
             },
             {
-              t: "Intervenants hackathon",
-              d: "Jérémie (CEO), Manar (CTO) et autres membres de The Tech Nation selon le sujet.",
+              t: "Hackathon facilitators",
+              d: "Jérémie (CEO), Manar (CTO), and other The Tech Nation members depending on the topic.",
             },
           ].map((b) => (
             <div
@@ -447,7 +417,7 @@ function WhoIntervenes() {
               <h3 className="font-sans font-black uppercase tracking-tight text-xl md:text-2xl text-brutal-accent">
                 {b.t}
               </h3>
-              <p className="mt-3 font-mono text-sm text-brutal-bg/80 leading-relaxed">
+              <p className="mt-3 font-mono text-sm text-brutal-on-dark-subtle leading-relaxed">
                 {b.d}
               </p>
             </div>
@@ -462,7 +432,6 @@ export default function Home() {
   return (
     <main className="flex flex-col flex-1 bg-brutal-bg text-brutal-fg">
       <Hero />
-      <Marquee />
       <HowItWorks />
       <Formats />
       <ModulesOverview />
@@ -477,59 +446,19 @@ export default function Home() {
                 data-calchead
                 className="font-sans font-black uppercase tracking-tighter text-4xl md:text-5xl lg:text-7xl mb-3"
               >
-                La calculette
+                The calculator
               </h2>
               <p
                 data-calchead
-                className="font-mono text-base md:text-lg text-brutal-fg/70 max-w-3xl"
+                className="font-mono text-base md:text-lg text-brutal-soft max-w-3xl"
               >
-                Cochez vos modules, formats et équipes. Le total se met à jour
-                automatiquement. Sélectionnez vos dates à la fin.
+                Check your modules, formats, and teams. The total updates
+                automatically. Pick your dates at the end.
               </p>
             </div>
           </Reveal>
-          <Calculator />
+          <CalculatorSheet />
         </div>
-      </section>
-
-      <section className="px-6 md:px-10 lg:px-16 py-20 md:py-28">
-        <Reveal childSelector="[data-cta]">
-          <div className="max-w-4xl flex flex-col gap-8">
-            <h2
-              data-cta
-              className="font-sans font-black uppercase tracking-tighter text-4xl md:text-6xl lg:text-7xl leading-[0.9]"
-            >
-              Cochez vos sélections
-              <br />
-              <span className="text-brutal-secondary">
-                et envoyez-nous le document.
-              </span>
-            </h2>
-            <p
-              data-cta
-              className="font-mono text-base md:text-lg text-brutal-fg/70 max-w-2xl"
-            >
-              On confirmera les dates et l'agenda ensemble.
-            </p>
-            <div data-cta>
-              <CTAButton>Envoyer la propale</CTAButton>
-            </div>
-            <div
-              data-cta
-              className="mt-6 pt-8 border-t-4 border-brutal-fg flex flex-wrap items-center justify-between gap-4"
-            >
-              <span className="font-sans font-black uppercase tracking-tight text-2xl md:text-3xl">
-                The Tech Nation
-              </span>
-              <a
-                href={`mailto:${PROPALE_CONTACT_EMAIL}`}
-                className="font-mono text-sm uppercase tracking-wider text-brutal-secondary hover:underline"
-              >
-                {PROPALE_CONTACT_EMAIL}
-              </a>
-            </div>
-          </div>
-        </Reveal>
       </section>
     </main>
   );

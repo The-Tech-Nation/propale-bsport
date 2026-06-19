@@ -17,6 +17,8 @@ import {
 } from "../lib/propale-mailto";
 import {
   computeQuote,
+  DATES,
+  FORMATS,
   type FormatKey,
   formatEuro,
   initialSelection,
@@ -75,8 +77,8 @@ function TeamGrid({
             {on && <Check size={14} strokeWidth={3} />}
           </span>
         </div>
-        <div className="mt-2 font-mono text-xs opacity-80">{t.count} pers.</div>
-        <div className="mt-1 font-mono text-[11px] uppercase tracking-wider opacity-60">
+        <div className="mt-2 font-mono text-xs text-brutal-soft">{t.count} people</div>
+        <div className="mt-1 font-mono text-[11px] uppercase tracking-wider text-brutal-subtle">
           {t.note}
         </div>
       </button>
@@ -91,34 +93,6 @@ function TeamGrid({
       <div className="grid grid-cols-3 border-r-4 border-b-4 border-brutal-fg">
         {row2.map((t, i) => renderTeam(t, i === row2.length - 1))}
       </div>
-    </div>
-  );
-}
-
-function FormatToggle({
-  value,
-  onChange,
-}: {
-  value: FormatKey;
-  onChange: (f: FormatKey) => void;
-}) {
-  return (
-    <div className="inline-flex border-t-4 border-l-4 border-brutal-fg">
-      {(["masterclass", "workshop"] as FormatKey[]).map((f) => (
-        <button
-          type="button"
-          key={f}
-          onClick={() => onChange(f)}
-          className={cn(
-            "px-4 py-2 font-sans font-black uppercase tracking-tight text-sm border-r-4 border-b-4 border-brutal-fg transition-colors",
-            value === f
-              ? "bg-brutal-fg text-brutal-bg"
-              : "bg-brutal-bg hover:bg-brutal-muted",
-          )}
-        >
-          {f === "masterclass" ? "Masterclass" : "Workshop"}
-        </button>
-      ))}
     </div>
   );
 }
@@ -143,7 +117,7 @@ function Stepper({
         type="button"
         onClick={() => set(value - step)}
         className="px-3 py-2 bg-brutal-bg hover:bg-brutal-muted border-r-4 border-brutal-fg"
-        aria-label="moins"
+        aria-label="decrease"
       >
         <Minus size={16} />
       </button>
@@ -154,7 +128,7 @@ function Stepper({
         type="button"
         onClick={() => set(value + step)}
         className="px-3 py-2 bg-brutal-bg hover:bg-brutal-muted border-l-4 border-brutal-fg"
-        aria-label="plus"
+        aria-label="increase"
       >
         <Plus size={16} />
       </button>
@@ -182,7 +156,7 @@ function CardHeader({
         </h3>
       </div>
       {tagline && (
-        <p className="mt-3 font-mono text-sm text-brutal-fg/80">{tagline}</p>
+        <p className="mt-3 font-mono text-sm text-brutal-soft">{tagline}</p>
       )}
     </div>
   );
@@ -194,7 +168,7 @@ function MiniSummary({ lines }: { lines: { label: string; total: number }[] }) {
   return (
     <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 font-mono text-sm">
       {lines.map((l) => (
-        <span key={`${l.label}-${l.total}`} className="text-brutal-fg/70">
+        <span key={`${l.label}-${l.total}`} className="text-brutal-soft">
           {l.label} ·{" "}
           <span className="text-brutal-fg font-sans font-black">
             {formatEuro(l.total)}€
@@ -202,7 +176,7 @@ function MiniSummary({ lines }: { lines: { label: string; total: number }[] }) {
         </span>
       ))}
       <span className="ml-auto font-sans font-black uppercase tracking-tight">
-        = {formatEuro(total)}€ HT
+        = {formatEuro(total)}€ excl. tax
       </span>
     </div>
   );
@@ -289,55 +263,92 @@ export function Calculator() {
     };
   }, [quote.lines.length, quote.total, sel.dates.length]);
 
-  const toggleTeamIn = (key: keyof Selection | "A" | "B" | "C", id: TeamId) => {
+  const toggleModuleBCTeam = (
+    moduleId: "B" | "C",
+    format: FormatKey,
+    teamId: TeamId,
+  ) => {
     setSel((prev) => {
-      if (key === "A") {
-        const has = prev.moduleA.teams.includes(id);
-        return {
-          ...prev,
-          moduleA: {
-            ...prev.moduleA,
-            teams: has
-              ? prev.moduleA.teams.filter((t) => t !== id)
-              : [...prev.moduleA.teams, id],
-          },
-        };
+      const pick = prev.modulesBC[moduleId];
+      const otherFormat: FormatKey =
+        format === "masterclass" ? "workshop" : "masterclass";
+      const teams = pick.teamsByFormat[format] ?? [];
+      const has = teams.includes(teamId);
+      const teamsByFormat = { ...pick.teamsByFormat };
+
+      if (has) {
+        const next = teams.filter((t) => t !== teamId);
+        if (next.length > 0) teamsByFormat[format] = next;
+        else delete teamsByFormat[format];
+      } else {
+        teamsByFormat[format] = [...teams, teamId];
+        const otherTeams = teamsByFormat[otherFormat] ?? [];
+        if (otherTeams.includes(teamId)) {
+          const next = otherTeams.filter((t) => t !== teamId);
+          if (next.length > 0) teamsByFormat[otherFormat] = next;
+          else delete teamsByFormat[otherFormat];
+        }
       }
-      const m = prev.modulesBC[key];
-      if (!m) return prev;
-      const has = m.teams.includes(id);
+
       return {
         ...prev,
         modulesBC: {
           ...prev.modulesBC,
-          [key]: {
-            ...m,
-            teams: has ? m.teams.filter((t) => t !== id) : [...m.teams, id],
+          [moduleId]: { ...pick, enabled: true, teamsByFormat },
+        },
+      };
+    });
+  };
+
+  const toggleModuleATeam = (option: ModuleAOption, id: TeamId) => {
+    setSel((prev) => {
+      const teams = prev.moduleA.teamsByOption[option] ?? [];
+      const has = teams.includes(id);
+      return {
+        ...prev,
+        moduleA: {
+          ...prev.moduleA,
+          teamsByOption: {
+            ...prev.moduleA.teamsByOption,
+            [option]: has
+              ? teams.filter((t) => t !== id)
+              : [...teams, id],
           },
         },
       };
     });
   };
 
-  const setModuleAOption = (option: ModuleAOption) => {
-    setSel((prev) => ({
-      ...prev,
-      moduleA: {
-        ...prev.moduleA,
-        option: prev.moduleA.option === option ? null : option,
-      },
-    }));
+  const toggleModuleAOption = (option: ModuleAOption) => {
+    setSel((prev) => {
+      const has = prev.moduleA.options.includes(option);
+      if (has) {
+        const { [option]: _removed, ...teamsByOption } =
+          prev.moduleA.teamsByOption;
+        return {
+          ...prev,
+          moduleA: {
+            options: prev.moduleA.options.filter((o) => o !== option),
+            teamsByOption,
+          },
+        };
+      }
+      return {
+        ...prev,
+        moduleA: {
+          ...prev.moduleA,
+          options: [...prev.moduleA.options, option],
+        },
+      };
+    });
   };
 
-  const setBC = (
-    id: string,
-    patch: Partial<{ enabled: boolean; format: FormatKey }>,
-  ) => {
+  const setBCEnabled = (id: "B" | "C", enabled: boolean) => {
     setSel((prev) => ({
       ...prev,
       modulesBC: {
         ...prev.modulesBC,
-        [id]: { ...prev.modulesBC[id], ...patch },
+        [id]: { ...prev.modulesBC[id], enabled },
       },
     }));
   };
@@ -380,7 +391,6 @@ export function Calculator() {
   };
 
   const moduleAQuote = useMemo(() => {
-    if (!sel.moduleA.option || sel.moduleA.teams.length === 0) return [];
     const q = computeQuote({
       ...sel,
       modulesBC: { ...sel.modulesBC },
@@ -427,14 +437,14 @@ export function Calculator() {
             >
               <div className="min-w-0 flex-1">
                 <div className="font-mono text-[10px] uppercase tracking-[3px] text-brutal-accent">
-                  Coût total
+                  Total cost
                 </div>
                 <div className="mt-1 flex items-baseline gap-2 flex-wrap">
                   <span className="font-sans font-black uppercase tracking-tighter text-4xl leading-none text-brutal-bg">
                     <AnimatedNumber value={quote.total} />
                   </span>
                   <span className="font-sans font-black uppercase text-lg text-brutal-secondary">
-                    €&nbsp;HT
+                    €&nbsp;excl. tax
                   </span>
                 </div>
               </div>
@@ -464,14 +474,14 @@ export function Calculator() {
                 <div className="flex flex-col gap-6 p-6 md:p-8 lg:p-10">
           <div className="hidden desktop:block">
             <div className="font-mono text-xs uppercase tracking-[3px] text-brutal-accent">
-              Coût total
+              Total cost
             </div>
             <div className="mt-2 flex items-baseline gap-3 flex-wrap">
               <span className="font-sans font-black uppercase tracking-tighter text-6xl md:text-7xl lg:text-8xl leading-[0.85] text-brutal-bg">
                 <AnimatedNumber value={quote.total} />
               </span>
               <span className="font-sans font-black uppercase text-2xl md:text-3xl text-brutal-secondary">
-                €&nbsp;HT
+                €&nbsp;excl. tax
               </span>
             </div>
           </div>
@@ -485,7 +495,7 @@ export function Calculator() {
                 <span className="font-sans font-black text-lg">
                   {quote.peopleCovered}
                 </span>{" "}
-                pers. couvertes
+                people covered
               </span>
             </div>
             <div className="flex items-center gap-2">
@@ -501,9 +511,8 @@ export function Calculator() {
 
           <div ref={breakdownRef} className="flex flex-col">
             {quote.lines.length === 0 && (
-              <p className="font-mono text-sm text-brutal-bg/60">
-                Cochez les modules et les équipes ci-contre. Le total se met à
-                jour.
+              <p className="font-mono text-sm text-brutal-on-dark-muted">
+                Check modules and teams on the right. The total updates live.
               </p>
             )}
             {quote.lines.map((l) => (
@@ -516,7 +525,7 @@ export function Calculator() {
                   <div className="font-sans font-black uppercase tracking-tight text-sm leading-tight">
                     {l.label}
                   </div>
-                  <div className="font-mono text-xs text-brutal-bg/60 mt-0.5">
+                  <div className="font-mono text-xs text-brutal-on-dark-muted mt-0.5">
                     {l.detail}
                   </div>
                 </div>
@@ -529,8 +538,8 @@ export function Calculator() {
 
           {sel.dates.length > 0 && (
             <div className="pt-2">
-              <div className="font-mono text-xs uppercase tracking-[3px] text-brutal-bg/60">
-                Dates retenues
+              <div className="font-mono text-xs uppercase tracking-[3px] text-brutal-on-dark-muted">
+                Selected dates
               </div>
               <div className="mt-2 flex flex-wrap gap-2">
                 {sel.dates.map((d) => (
@@ -538,19 +547,15 @@ export function Calculator() {
                     key={d}
                     className="bg-brutal-bg text-brutal-fg font-sans font-black uppercase text-xs px-2.5 py-1"
                   >
-                    {d === "2026-06-29"
-                      ? "29 juin"
-                      : d === "2026-06-30"
-                        ? "30 juin"
-                        : "3 juillet"}
+                    {DATES.find((x) => x.id === d)?.label ?? d}
                   </span>
                 ))}
               </div>
             </div>
           )}
 
-          <p className="font-mono text-xs text-brutal-bg/50 mt-auto pt-4 border-t-2 border-brutal-bg/30">
-            Prix indicatifs, hors taxes. En présentiel chez BSport.
+          <p className="font-mono text-xs text-brutal-on-dark-muted mt-auto pt-4 border-t-2 border-brutal-bg/30">
+            Indicative prices, excl. tax. In person at BSport.
           </p>
 
           <CTAButton
@@ -560,7 +565,7 @@ export function Calculator() {
               window.location.href = buildPropaleMailtoUrl(sel);
             }}
           >
-            Envoyer la propale
+            Send proposal
           </CTAButton>
 
           <button
@@ -568,7 +573,7 @@ export function Calculator() {
             onClick={reset}
             className="self-start inline-flex items-center gap-2 border-2 border-brutal-bg/40 px-3 py-1.5 font-mono text-xs uppercase tracking-wider hover:border-brutal-secondary hover:text-brutal-secondary transition-colors"
           >
-            <X size={14} /> Réinitialiser
+            <X size={14} /> Reset
           </button>
                 </div>
               </div>
@@ -584,30 +589,38 @@ export function Calculator() {
           <CardHeader
             index="Module A"
             title="Claude Code"
-            tagline="Claude Code n'est pas un outil pour builder des apps à héberger. C'est un personal assistant : on branche les outils du quotidien (mail, etc.), on crée un second brain, on automatise des process — notamment le process de vente."
+            tagline="Claude Code isn't a tool for shipping hosted apps. It's a personal assistant: connect everyday tools (email, etc.), build a second brain, automate workflows — especially the sales process."
           />
           <div className="p-6 md:p-8 flex flex-col gap-6">
             <div>
-              <div className="font-mono text-xs uppercase tracking-[3px] text-brutal-fg/60 mb-3">
-                Choisissez une option
+              <div className="font-mono text-xs uppercase tracking-[3px] text-brutal-subtle mb-2">
+                Pick one or more options
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-0 border-t-4 border-l-4 border-brutal-fg">
+              <p className="font-mono text-xs text-brutal-soft mb-3 max-w-3xl">
+                Option 1 is a{" "}
+                <span className="font-sans font-black uppercase">masterclass</span>{" "}
+                only (1h). Options 2 and 3 are{" "}
+                <span className="font-sans font-black uppercase">workshops</span>{" "}
+                only (1h30) — format doesn't change.
+              </p>
+              <div className="flex flex-row border-t-4 border-l-4 border-brutal-fg">
                 {MODULE_A_OPTIONS.map((opt) => {
-                  const on = sel.moduleA.option === opt.key;
+                  const on = sel.moduleA.options.includes(opt.key);
+                  const isMasterclass = opt.format === "masterclass";
                   return (
                     <button
                       type="button"
                       key={opt.key}
-                      onClick={() => setModuleAOption(opt.key)}
+                      onClick={() => toggleModuleAOption(opt.key)}
                       className={cn(
-                        "relative p-5 text-left border-r-4 border-b-4 border-brutal-fg transition-colors",
+                        "relative flex-1 min-w-0 p-5 text-left border-r-4 border-b-4 border-brutal-fg transition-colors",
                         on
                           ? "bg-brutal-fg text-brutal-bg"
                           : "bg-brutal-bg hover:bg-brutal-muted",
                       )}
                     >
                       <div className="flex items-start justify-between gap-3">
-                        <span className="font-mono text-xs uppercase tracking-wider opacity-70">
+                        <span className="font-mono text-xs uppercase tracking-wider text-brutal-subtle">
                           Option {opt.key}
                         </span>
                         <span
@@ -621,76 +634,57 @@ export function Calculator() {
                           {on && <Check size={14} strokeWidth={3} />}
                         </span>
                       </div>
+                      <span
+                        className={cn(
+                          "inline-block mt-2 px-2 py-0.5 font-sans font-black text-[10px] uppercase tracking-wider border-2",
+                          on
+                            ? isMasterclass
+                              ? "border-brutal-accent bg-brutal-accent text-brutal-fg"
+                              : "border-brutal-secondary bg-brutal-secondary text-brutal-fg"
+                            : isMasterclass
+                              ? "border-brutal-fg bg-brutal-fg text-brutal-bg"
+                              : "border-brutal-secondary text-brutal-secondary",
+                        )}
+                      >
+                        {isMasterclass
+                          ? "Masterclass only"
+                          : "Workshop only"}
+                      </span>
                       <div className="mt-2 font-sans font-black uppercase tracking-tight text-lg leading-tight">
                         {opt.title}
                       </div>
-                      <div className="mt-1 font-mono text-xs opacity-70">
-                        {opt.duration} ·{" "}
-                        {opt.format === "masterclass"
-                          ? "Masterclass"
-                          : "Workshop"}{" "}
-                        · pour {opt.audience}
+                      <div className="mt-1 font-mono text-xs text-brutal-subtle">
+                        {opt.duration} · for {opt.audience}
                       </div>
-                      <div className="mt-2 font-mono text-xs opacity-80">
+                      <div className="mt-2 font-mono text-xs text-brutal-soft">
                         {opt.cover}
                       </div>
                     </button>
                   );
                 })}
-                <button
-                  type="button"
-                  onClick={() => setModuleAOption("2+3")}
-                  className={cn(
-                    "relative p-5 text-left border-r-4 border-b-4 border-brutal-fg transition-colors",
-                    sel.moduleA.option === "2+3"
-                      ? "bg-brutal-fg text-brutal-bg"
-                      : "bg-brutal-bg hover:bg-brutal-muted",
-                  )}
-                >
-                  <div className="flex items-start justify-between gap-3">
-                    <span className="font-mono text-xs uppercase tracking-wider opacity-70">
-                      Option 2 + 3
-                    </span>
-                    <span
-                      className={cn(
-                        "flex size-5 items-center justify-center border-2 border-current shrink-0",
-                        sel.moduleA.option === "2+3"
-                          ? "bg-brutal-accent text-brutal-fg"
-                          : "bg-brutal-bg",
-                      )}
-                    >
-                      {sel.moduleA.option === "2+3" && (
-                        <Check size={14} strokeWidth={3} />
-                      )}
-                    </span>
-                  </div>
-                  <div className="mt-2 font-sans font-black uppercase tracking-tight text-lg leading-tight">
-                    Augmented Sales + Personal Assistant
-                  </div>
-                  <div className="mt-1 font-mono text-xs opacity-70">
-                    2 workshops 1h30 · pour sales + tout le monde
-                  </div>
-                  <div className="mt-2 font-mono text-xs opacity-80">
-                    Les deux workshops en complément : vente augmentée +
-                    assistant personnel.
-                  </div>
-                </button>
               </div>
             </div>
 
-            <div>
-              <div className="font-mono text-xs uppercase tracking-[3px] text-brutal-fg/60 mb-3">
-                Équipes concernées
-              </div>
-              {!sel.moduleA.option && (
-                <p className="font-mono text-xs text-brutal-fg/50 mb-3">
-                  Choisissez d'abord une option.
+            <div className="flex flex-col gap-6">
+              {sel.moduleA.options.length === 0 && (
+                <p className="font-mono text-xs text-brutal-faint">
+                  Pick at least one option first to select teams.
                 </p>
               )}
-              <TeamGrid
-                selected={sel.moduleA.teams}
-                onToggle={(id) => toggleTeamIn("A", id)}
-              />
+              {MODULE_A_OPTIONS.map((opt) => {
+                if (!sel.moduleA.options.includes(opt.key)) return null;
+                return (
+                  <div key={opt.key}>
+                    <div className="font-mono text-xs uppercase tracking-[3px] text-brutal-subtle mb-3">
+                      Teams — option {opt.key}
+                    </div>
+                    <TeamGrid
+                      selected={sel.moduleA.teamsByOption[opt.key] ?? []}
+                      onToggle={(id) => toggleModuleATeam(opt.key, id)}
+                    />
+                  </div>
+                );
+              })}
             </div>
 
             <MiniSummary lines={moduleAQuote} />
@@ -708,48 +702,59 @@ export function Calculator() {
                 tagline={m.tagline}
               />
               <div className="p-6 md:p-8 flex flex-col gap-6">
-                <div className="flex flex-wrap items-center gap-4">
-                  <button
-                    type="button"
-                    onClick={() => setBC(m.id, { enabled: !pick.enabled })}
-                    className={cn(
-                      "inline-flex items-center gap-2 border-4 border-brutal-fg px-4 py-2 font-sans font-black uppercase tracking-tight text-sm transition-colors",
-                      pick.enabled
-                        ? "bg-brutal-fg text-brutal-bg"
-                        : "bg-brutal-bg hover:bg-brutal-muted",
-                    )}
-                  >
-                    {pick.enabled ? (
-                      <>
-                        <Check size={16} strokeWidth={3} /> Inclure
-                      </>
-                    ) : (
-                      <>
-                        <Plus size={16} /> Inclure ce module
-                      </>
-                    )}
-                  </button>
-                  <FormatToggle
-                    value={pick.format}
-                    onChange={(f) => setBC(m.id, { format: f, enabled: true })}
-                  />
-                </div>
-
-                <p className="font-mono text-sm text-brutal-fg/80">
-                  {pick.format === "masterclass"
-                    ? m.masterclassDesc
-                    : m.workshopDesc}
-                </p>
+                <button
+                  type="button"
+                  onClick={() =>
+                    setBCEnabled(m.id as "B" | "C", !pick.enabled)
+                  }
+                  className={cn(
+                    "self-start inline-flex items-center gap-2 border-4 border-brutal-fg px-4 py-2 font-sans font-black uppercase tracking-tight text-sm transition-colors",
+                    pick.enabled
+                      ? "bg-brutal-fg text-brutal-bg"
+                      : "bg-brutal-bg hover:bg-brutal-muted",
+                  )}
+                >
+                  {pick.enabled ? (
+                    <>
+                      <Check size={16} strokeWidth={3} /> Include
+                    </>
+                  ) : (
+                    <>
+                      <Plus size={16} /> Include this module
+                    </>
+                  )}
+                </button>
 
                 {pick.enabled && (
-                  <div>
-                    <div className="font-mono text-xs uppercase tracking-[3px] text-brutal-fg/60 mb-3">
-                      Équipes concernées
-                    </div>
-                    <TeamGrid
-                      selected={pick.teams}
-                      onToggle={(id) => toggleTeamIn(m.id, id)}
-                    />
+                  <div className="flex flex-col gap-6">
+                    {(["masterclass", "workshop"] as FormatKey[]).map(
+                      (format) => {
+                        const fmt = FORMATS[format];
+                        const teams = pick.teamsByFormat[format] ?? [];
+                        return (
+                          <div key={format}>
+                            <div className="font-mono text-xs uppercase tracking-[3px] text-brutal-subtle mb-2">
+                              {fmt.label} · {fmt.duration} · {formatEuro(fmt.price)}€
+                            </div>
+                            <p className="font-mono text-xs text-brutal-soft mb-3 max-w-3xl">
+                              {format === "masterclass"
+                                ? m.masterclassDesc
+                                : m.workshopDesc}
+                            </p>
+                            <TeamGrid
+                              selected={teams}
+                              onToggle={(id) =>
+                                toggleModuleBCTeam(
+                                  m.id as "B" | "C",
+                                  format,
+                                  id,
+                                )
+                              }
+                            />
+                          </div>
+                        );
+                      },
+                    )}
                   </div>
                 )}
 
@@ -779,11 +784,11 @@ export function Calculator() {
             >
               {sel.moduleD.enabled ? (
                 <>
-                  <Check size={16} strokeWidth={3} /> Inclure
+                  <Check size={16} strokeWidth={3} /> Include
                 </>
               ) : (
                 <>
-                  <Plus size={16} /> Inclure ce module
+                  <Plus size={16} /> Include this module
                 </>
               )}
             </button>
@@ -791,8 +796,8 @@ export function Calculator() {
             {sel.moduleD.enabled && (
               <div className="flex flex-wrap items-end gap-8">
                 <div className="flex flex-col gap-2">
-                  <span className="font-mono text-xs uppercase tracking-[3px] text-brutal-fg/60">
-                    Heures
+                  <span className="font-mono text-xs uppercase tracking-[3px] text-brutal-subtle">
+                    Hours
                   </span>
                   <Stepper
                     value={sel.moduleD.hours}
@@ -802,8 +807,8 @@ export function Calculator() {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <span className="font-mono text-xs uppercase tracking-[3px] text-brutal-fg/60">
-                    Formateurs
+                  <span className="font-mono text-xs uppercase tracking-[3px] text-brutal-subtle">
+                    Trainers
                   </span>
                   <Stepper
                     value={sel.moduleD.trainers}
@@ -812,8 +817,8 @@ export function Calculator() {
                     max={6}
                   />
                 </div>
-                <div className="font-mono text-sm text-brutal-fg/70">
-                  300€ HT / heure / formateur
+                <div className="font-mono text-sm text-brutal-soft">
+                  {formatEuro(MODULE_D.pricePerHourPerTrainer)}€ excl. tax / hour / trainer
                 </div>
               </div>
             )}
@@ -824,15 +829,11 @@ export function Calculator() {
 
         {/* DATES */}
         <section className="p-6 md:p-8 flex flex-col gap-5">
-          <div className="font-mono text-xs uppercase tracking-[3px] text-brutal-fg/60">
-            Dates souhaitées
+          <div className="font-mono text-xs uppercase tracking-[3px] text-brutal-subtle">
+            Preferred dates
           </div>
           <div className="flex flex-wrap gap-0 border-t-4 border-l-4 border-brutal-fg">
-            {[
-              { id: "2026-06-29", label: "29 juin" },
-              { id: "2026-06-30", label: "30 juin" },
-              { id: "2026-07-03", label: "3 juillet" },
-            ].map((d) => {
+            {DATES.map((d) => {
               const on = sel.dates.includes(d.id);
               return (
                 <button
@@ -861,8 +862,8 @@ export function Calculator() {
               );
             })}
           </div>
-          <p className="font-mono text-xs text-brutal-fg/50">
-            Indiquez vos créneaux. On confirmera l'agenda ensemble.
+          <p className="font-mono text-xs text-brutal-faint">
+            Share your preferred slots. We'll confirm the agenda together.
           </p>
         </section>
       </div>

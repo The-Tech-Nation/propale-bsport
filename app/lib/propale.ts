@@ -8,21 +8,21 @@ export interface Team {
 }
 
 export const TEAMS: Team[] = [
-  { id: "sales_a", label: "Sales A", count: 25, note: "moitié des 50 Sales" },
-  { id: "sales_b", label: "Sales B", count: 25, note: "moitié des 50 Sales" },
+  { id: "sales_a", label: "Sales A", count: 25, note: "half of 50 Sales" },
+  { id: "sales_b", label: "Sales B", count: 25, note: "half of 50 Sales" },
   {
     id: "csm_a",
     label: "CSM A",
     count: 25,
-    note: "moitié des 50 Customer Success",
+    note: "half of 50 Customer Success",
   },
   {
     id: "csm_b",
     label: "CSM B",
     count: 25,
-    note: "moitié des 50 Customer Success",
+    note: "half of 50 Customer Success",
   },
-  { id: "g_and_a", label: "G&A", count: 15, note: "fonctions support" },
+  { id: "g_and_a", label: "G&A", count: 15, note: "support functions" },
 ];
 
 export const TOTAL_PEOPLE = TEAMS.reduce((s, t) => s + t.count, 0);
@@ -30,11 +30,11 @@ export const TOTAL_PEOPLE = TEAMS.reduce((s, t) => s + t.count, 0);
 export const FORMATS = {
   masterclass: {
     label: "Masterclass",
-    capacity: 100,
+    capacity: 115,
     duration: "1h",
     trainers: 2,
     price: 1200,
-    blurb: "On présente, on installe, on démontre. Peu d'interactivité.",
+    blurb: "We present, install, and demo. Limited interactivity.",
   },
   workshop: {
     label: "Workshop",
@@ -42,13 +42,13 @@ export const FORMATS = {
     duration: "1h30",
     trainers: 4,
     price: 2200,
-    blurb: "Interactif. Assistance personnalisée, questions.",
+    blurb: "Interactive. Hands-on support and Q&A.",
   },
 } as const;
 
 export type FormatKey = keyof typeof FORMATS;
 
-export type ModuleAOption = "1" | "2" | "3" | "2+3";
+export type ModuleAOption = "1" | "2" | "3";
 
 export interface ModuleAOptionDef {
   key: ModuleAOption;
@@ -64,32 +64,32 @@ export const MODULE_A_OPTIONS: ModuleAOptionDef[] = [
   {
     key: "1",
     title: "Intro & Installation Claude Code",
-    audience: "tout le monde",
+    audience: "everyone",
     duration: "1h",
     format: "masterclass",
-    deroule: "Présentation (5 min) → Possibilités (10 min) → Setup (45 min)",
+    deroule: "Overview (5 min) → Capabilities (10 min) → Setup (45 min)",
     cover:
-      "Ce qu'est Claude Code, ce que ça peut faire, installation en live pour chaque participant.",
+      "What Claude Code is, what it can do, live installation for every participant.",
   },
   {
     key: "2",
     title: "Claude Code + Augmented Sales",
-    audience: "équipes sales",
+    audience: "sales teams",
     duration: "1h30",
     format: "workshop",
-    deroule: "Intro & installation + setup + fonctionnalités Augmented Sales",
+    deroule: "Intro & install + setup + Augmented Sales features",
     cover:
-      "Installation, puis comment brancher les outils, automatiser le process de vente, augmenter la productivité commerciale.",
+      "Installation, then how to connect tools, automate the sales process, and boost commercial productivity.",
   },
   {
     key: "3",
     title: "Claude Code + My Personal Assistant",
-    audience: "tout le monde",
+    audience: "everyone",
     duration: "1h30",
     format: "workshop",
-    deroule: "Intro & installation + setup + personal assistant / second brain",
+    deroule: "Intro & install + setup + personal assistant / second brain",
     cover:
-      "Installation, puis comment brancher le mail et les outils, créer un second brain, automatiser son process de vente / son quotidien.",
+      "Installation, then how to connect email and tools, build a second brain, and automate your sales process / daily workflow.",
   },
 ];
 
@@ -98,42 +98,43 @@ export const MODULES_BCD = [
     id: "B",
     name: "Inspiration",
     tagline:
-      "Pas du technique pur — des idées applicables sur leur métier et leurs use cases.",
+      "Not pure tech — ideas they can apply to their role and use cases.",
     formats: ["masterclass", "workshop"] as FormatKey[],
     masterclassDesc:
-      "Démonstration d'un use case choisi. On montre, on inspire.",
+      "Demo of a chosen use case. We show, we inspire.",
     workshopDesc:
-      "Sessions interactives. On creuse leurs cas concrets, on ouvre des pistes sur leur métier.",
-    cover: "Inspiration sur leurs use cases et leur business.",
+      "Interactive sessions. We dig into their real cases and open paths for their business.",
+    cover: "Inspiration on their use cases and business.",
   },
   {
     id: "C",
-    name: "Claude Chat & Cowork — setup & optimisation",
+    name: "Claude Chat & Cowork — setup & optimization",
     tagline:
-      "BSport a déjà Claude Chat et Cowork. Ici on optimise l'usage, on ne réinstalle pas.",
+      "BSport already has Claude Chat and Cowork. Here we optimize usage — no reinstall.",
     formats: ["masterclass", "workshop"] as FormatKey[],
     masterclassDesc:
-      "Démonstration des bonnes pratiques : skills, routines, connecteurs, projets, prompt instruction, automatisation.",
+      "Best practices demo: skills, routines, connectors, projects, prompt instructions, automation.",
     workshopDesc:
-      "Mise en pratique avec les équipes : skills, routines, connecteurs natifs, projets, comment prompter (contexte, simplification), automatisation.",
+      "Hands-on with teams: skills, routines, native connectors, projects, how to prompt (context, simplification), automation.",
     cover:
-      "Skills, routines, connecteurs natifs, projets, instruction de prompt, automatisation.",
+      "Skills, routines, native connectors, projects, prompt instructions, automation.",
   },
 ] as const;
 
 export const MODULE_D = {
   id: "D",
-  name: "Intervenants hackathon",
+  name: "Hackathon facilitators",
   tagline:
-    "BSport organise un hackathon. Notre équipe circule parmi les participants pour débloquer, aider, corriger, orienter — en direct, au fil de l'eau.",
-  pricePerHourPerTrainer: 300,
+    "BSport runs a hackathon. Our team roams the floor to unblock, help, fix, and guide — live, as it happens.",
+  pricePerHourPerTrainer: 350,
   defaultTrainers: 2,
 };
 
 export const DATES = [
-  { id: "2026-06-29", label: "29 juin" },
-  { id: "2026-06-30", label: "30 juin" },
-  { id: "2026-07-03", label: "3 juillet" },
+  { id: "2026-06-29", label: "Jun 29" },
+  { id: "2026-06-30", label: "Jun 30" },
+  { id: "2026-07-01", label: "Jul 1" },
+  { id: "2026-07-03", label: "Jul 3" },
 ];
 
 export const ceil = (n: number) => Math.ceil(n);
@@ -155,13 +156,12 @@ export function masterclassSessionsForTeams(teamIds: TeamId[]): number {
 }
 
 export interface ModuleAPick {
-  option: ModuleAOption | null;
-  teams: TeamId[];
+  options: ModuleAOption[];
+  teamsByOption: Partial<Record<ModuleAOption, TeamId[]>>;
 }
 export interface ModuleBCPick {
   enabled: boolean;
-  format: FormatKey;
-  teams: TeamId[];
+  teamsByFormat: Partial<Record<FormatKey, TeamId[]>>;
 }
 export interface ModuleDPick {
   enabled: boolean;
@@ -177,10 +177,10 @@ export interface Selection {
 }
 
 export const initialSelection: Selection = {
-  moduleA: { option: null, teams: [] },
+  moduleA: { options: [], teamsByOption: {} },
   modulesBC: {
-    B: { enabled: false, format: "masterclass", teams: [] },
-    C: { enabled: false, format: "masterclass", teams: [] },
+    B: { enabled: false, teamsByFormat: {} },
+    C: { enabled: false, teamsByFormat: {} },
   },
   moduleD: { enabled: false, hours: 0, trainers: MODULE_D.defaultTrainers },
   dates: [],
@@ -201,15 +201,39 @@ export interface Quote {
   peopleCovered: number;
 }
 
+export function moduleATeamsForOption(
+  pick: ModuleAPick,
+  option: ModuleAOption,
+): TeamId[] {
+  return pick.teamsByOption[option] ?? [];
+}
+
+export function moduleBCTeamsForFormat(
+  pick: ModuleBCPick,
+  format: FormatKey,
+): TeamId[] {
+  return pick.teamsByFormat[format] ?? [];
+}
+
+export function moduleBCHasTeamSelection(pick: ModuleBCPick): boolean {
+  return (
+    (pick.teamsByFormat.masterclass?.length ?? 0) > 0 ||
+    (pick.teamsByFormat.workshop?.length ?? 0) > 0
+  );
+}
+
 export function computeQuote(sel: Selection): Quote {
   const lines: LineItem[] = [];
 
-  if (sel.moduleA.option && sel.moduleA.teams.length > 0) {
-    const isCombined = sel.moduleA.option === "2+3";
-    const opt = MODULE_A_OPTIONS.find((o) => o.key === sel.moduleA.option);
+  for (const key of sel.moduleA.options) {
+    const teams = moduleATeamsForOption(sel.moduleA, key);
+    if (teams.length === 0) continue;
 
-    if (opt?.key === "1") {
-      const s = masterclassSessionsForTeams(sel.moduleA.teams);
+    const opt = MODULE_A_OPTIONS.find((o) => o.key === key);
+    if (!opt) continue;
+
+    if (opt.key === "1") {
+      const s = masterclassSessionsForTeams(teams);
       if (s > 0)
         lines.push({
           label: `Claude Code — ${opt.title}`,
@@ -218,30 +242,26 @@ export function computeQuote(sel: Selection): Quote {
           unitPrice: FORMATS.masterclass.price,
           total: s * FORMATS.masterclass.price,
         });
-    } else if (opt || isCombined) {
-      const perTeam = workshopSessionsForTeams(sel.moduleA.teams);
-      const multiplier = isCombined ? 2 : 1;
-      const s = perTeam * multiplier;
-      if (s > 0) {
-        const label = isCombined
-          ? "Claude Code — Augmented Sales + Personal Assistant"
-          : `Claude Code — ${opt!.title}`;
+    } else {
+      const s = workshopSessionsForTeams(teams);
+      if (s > 0)
         lines.push({
-          label,
+          label: `Claude Code — ${opt.title}`,
           detail: `Workshop 1h30 × ${s}`,
           sessions: s,
           unitPrice: FORMATS.workshop.price,
           total: s * FORMATS.workshop.price,
         });
-      }
     }
   }
 
   for (const m of MODULES_BCD) {
     const pick = sel.modulesBC[m.id];
-    if (!pick || !pick.enabled || pick.teams.length === 0) continue;
-    if (pick.format === "masterclass") {
-      const s = masterclassSessionsForTeams(pick.teams);
+    if (!pick?.enabled) continue;
+
+    const mcTeams = moduleBCTeamsForFormat(pick, "masterclass");
+    if (mcTeams.length > 0) {
+      const s = masterclassSessionsForTeams(mcTeams);
       if (s > 0)
         lines.push({
           label: `Module ${m.id} — ${m.name}`,
@@ -250,8 +270,11 @@ export function computeQuote(sel: Selection): Quote {
           unitPrice: FORMATS.masterclass.price,
           total: s * FORMATS.masterclass.price,
         });
-    } else {
-      const s = workshopSessionsForTeams(pick.teams);
+    }
+
+    const wsTeams = moduleBCTeamsForFormat(pick, "workshop");
+    if (wsTeams.length > 0) {
+      const s = workshopSessionsForTeams(wsTeams);
       if (s > 0)
         lines.push({
           label: `Module ${m.id} — ${m.name}`,
@@ -267,13 +290,18 @@ export function computeQuote(sel: Selection): Quote {
   let peopleCovered = 0;
 
   const allTeams = new Set<TeamId>();
-  sel.moduleA.teams.forEach((t) => {
-    allTeams.add(t);
-  });
-  for (const m of MODULES_BCD) {
-    sel.modulesBC[m.id].teams.forEach((t) => {
+  for (const key of sel.moduleA.options) {
+    moduleATeamsForOption(sel.moduleA, key).forEach((t) => {
       allTeams.add(t);
     });
+  }
+  for (const m of MODULES_BCD) {
+    const pick = sel.modulesBC[m.id];
+    for (const format of ["masterclass", "workshop"] as FormatKey[]) {
+      moduleBCTeamsForFormat(pick, format).forEach((t) => {
+        allTeams.add(t);
+      });
+    }
   }
   peopleCovered = Array.from(allTeams).reduce(
     (s, id) => s + (TEAMS.find((t) => t.id === id)?.count ?? 0),
@@ -286,8 +314,8 @@ export function computeQuote(sel: Selection): Quote {
       sel.moduleD.trainers *
       MODULE_D.pricePerHourPerTrainer;
     lines.push({
-      label: "Intervenants hackathon",
-      detail: `${sel.moduleD.hours}h × ${sel.moduleD.trainers} formateur${sel.moduleD.trainers > 1 ? "s" : ""} × 300€`,
+      label: "Hackathon facilitators",
+      detail: `${sel.moduleD.hours}h × ${sel.moduleD.trainers} trainer${sel.moduleD.trainers > 1 ? "s" : ""} × ${formatEuro(MODULE_D.pricePerHourPerTrainer)}€`,
       sessions: sel.moduleD.hours,
       unitPrice: MODULE_D.pricePerHourPerTrainer * sel.moduleD.trainers,
       total: t,
@@ -304,5 +332,5 @@ export function computeQuote(sel: Selection): Quote {
 }
 
 export function formatEuro(n: number): string {
-  return n.toLocaleString("fr-FR");
+  return Math.round(n).toLocaleString("fr-FR");
 }

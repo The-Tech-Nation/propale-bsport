@@ -2,6 +2,7 @@
 
 import { animate } from "animejs";
 import { useEffect, useRef } from "react";
+import { formatEuro } from "../lib/propale";
 
 interface AnimatedNumberProps {
   value: number;
@@ -13,7 +14,7 @@ interface AnimatedNumberProps {
 export function AnimatedNumber({
   value,
   duration = 700,
-  format = (n) => Math.round(n).toLocaleString("fr-FR"),
+  format = formatEuro,
   className,
 }: AnimatedNumberProps) {
   const ref = useRef<HTMLSpanElement>(null);

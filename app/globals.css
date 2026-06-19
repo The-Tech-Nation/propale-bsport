@@ -5,7 +5,12 @@
   --color-brutal-fg: #000000;
   --color-brutal-accent: #aeee00;
   --color-brutal-secondary: #ff00ff;
-  --color-brutal-muted: #e5e5e5;
+  --color-brutal-muted: #d4d4d4;
+  --color-brutal-subtle: #4a4a4a;
+  --color-brutal-soft: #333333;
+  --color-brutal-faint: #5c5c5c;
+  --color-brutal-on-dark-muted: #c8c8c8;
+  --color-brutal-on-dark-subtle: #e0e0e0;
 
   --font-sans: "Space Grotesk", sans-serif;
   --font-mono: "DM Mono", monospace;
@@ -106,24 +111,5 @@
   }
   50% {
     border-color: var(--color-brutal-fg);
-  }
-}
-
-@keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-@keyframes gridPulse {
-  0%,
-  100% {
-    opacity: 0.06;
-  }
-  50% {
-    opacity: 0.14;
   }
 }
